@@ -1,9 +1,13 @@
+import { Rol } from "./rol";
+
 export class Usuario{
-  nombre!:string;
-  apellido!:string;
-  email!:string;
-  username!:string;
+  id!:number;
+  nombreUsuario!:string;
   password!:string;
-  enabled!:boolean;
-  roles!:string[];
+  nombre!:string;
+  email!:string;
+  roles!:Set<Rol>;
+  new!:boolean;
+
+
 }

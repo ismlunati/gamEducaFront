@@ -11,6 +11,8 @@ export class UsuarioService {
   private _usuario!:Usuario;
   private _token!:string;
 
+  private loginUrl = 'http://localhost:8081/api/auth/login';
+
 
   constructor( private http:HttpClient) { }
 
@@ -19,10 +21,11 @@ export class UsuarioService {
 
     if(this._usuario != null){
       return this._usuario;
-    }else if(this._usuario == null && sessionStorage.getItem('usuario') != null){
-      this._usuario = JSON.parse(sessionStorage.getItem('usuario') || '{}') as Usuario;
+    }else if(this._usuario == null && localStorage.getItem('usuario') != null){
+      this._usuario = JSON.parse(localStorage.getItem('usuario') || '{}') as Usuario;
     }
-
+    //this._usuario = JSON.parse(localStorage.getItem('usuario') || '{}') as Usuario;
+    console.log(this._usuario);
     return new Usuario();
   }
 
@@ -35,15 +38,22 @@ export class UsuarioService {
       this._token = sessionStorage.getItem('token') || '{}'
       return this._token
     }
+    console.log(this._token);
     return "";
 
   }
 
+  login(username: string, password: string): Observable<any> {
+    console.log("Estoioy aqui;");
+    return this.http.post<any>(this.loginUrl, {
+      username,
+      password
+    });
+  }
 
 
-
-  login(usuario:Usuario):Observable<any>{
-    const urlEndpoint = 'http://localhost:8087/oauth/token';
+  login1(usuario:Usuario):Observable<any>{
+    const urlEndpoint = 'http://localhost:8081/api/auth/login';
     const credenciales = btoa('angularapp'+':'+'12345');
 
     //objeto de tipo cabecera
@@ -54,7 +64,7 @@ export class UsuarioService {
 
     let params = new URLSearchParams();
     params.set('grant_type','password');
-    params.set('username',usuario.username);
+    params.set('username',usuario.nombreUsuario);
     params.set('password',usuario.password);
 
     console.log("login parametros pasados:",params.toString());
@@ -62,16 +72,16 @@ export class UsuarioService {
     return this.http.post<any>(urlEndpoint, params.toString(),{headers: httpHeaders} );
   }
   //guardar usuario recibido desde token payload
-  guardarUsuario(accessToken:string):void{
-    let payload = this.obtenerDatosToken(accessToken);
-    this._usuario = new Usuario();
-    this._usuario.nombre = payload.nombre;
-    this._usuario.apellido = payload.apellido;
-    this._usuario.email = payload.email;
-    this._usuario.username = payload.user_name;
-    this._usuario.roles= payload.authorities;
-    sessionStorage.setItem('usuario',JSON.stringify(this._usuario))
-  }
+  // guardarUsuario(accessToken:string):void{
+  //   let payload = this.obtenerDatosToken(accessToken);
+  //   this._usuario = new Usuario();
+  //   this._usuario.nombre = payload.nombre;
+  //   this._usuario.apellido = payload.apellido;
+  //   this._usuario.email = payload.email;
+  //   this._usuario.username = payload.user_name;
+  //   this._usuario.roles= payload.authorities;
+  //   sessionStorage.setItem('usuario',JSON.stringify(this._usuario))
+  // }
 
   //metodo para guardar token
   guardarToken(accessToken:string):void{
@@ -102,8 +112,9 @@ export class UsuarioService {
     this._token='';
     this._usuario = new Usuario();
     sessionStorage.clear();
+    localStorage.clear();
     sessionStorage.removeItem('token');
-    sessionStorage.removeItem('usuario');
+    localStorage.removeItem('usuario');
   }
 
 

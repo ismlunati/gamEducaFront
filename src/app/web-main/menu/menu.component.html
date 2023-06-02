@@ -21,17 +21,26 @@
   
   
           <li class="nav-item dropdown">
-            <a *ngIf="this.service.usuario.username" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                {{this.service.usuario.username}}
+            <!-- <a *ngIf="this.service.usuario.nombreUsuario" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                {{this.service.usuario.nombreUsuario}}
             </a>
   
-            <a *ngIf="!this.service.usuario.username" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <a *ngIf="!this.service.usuario.nombreUsuario" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Login
+            </a> -->
+
+
+            <a *ngIf="(usuario$ | async)?.nombreUsuario" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              {{(usuario$ | async)?.nombreUsuario}}
+            </a>
+            
+            <a *ngIf="!(usuario$ | async)?.nombreUsuario" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
               Login
             </a>
-  
+   
   
             <ul class="dropdown-menu">
-              <li *ngIf="!service.token; else cerrar">
+              <li *ngIf="!(usuario$ | async)?.nombreUsuario; else cerrar">
                 <a class="dropdown-item" routerLink="/login">Iniciar Sesión</a>
                 <a class="dropdown-item" routerLink="/register">¿Eres nuevo en la web?</a>
               </li>

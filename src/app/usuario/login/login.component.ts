@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Usuario } from '../clases/usuario';
-import { UsuarioService } from '../usuario.service';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
+import { AuthService } from '../auth.service';
+import { FormGroup, FormControl } from '@angular/forms';
 
 
 
@@ -14,28 +15,37 @@ export class LoginComponent implements OnInit {
 
   usuario:Usuario= new Usuario();
 
-  constructor( private servicio:UsuarioService, private router:Router) { }
+
+  loginForm = new FormGroup({
+      nombreUsuario: new FormControl(''),
+      password: new FormControl('')
+  });
+
+
+
+  constructor( private servicio:AuthService, private router:Router) { }
 
    ngOnInit(): void {
 
-    if(this.servicio.token){
-      Swal.fire("Aviso","Ya estas autenticado!","info");
-      this.router.navigate([''])
-    }
+    // if(this.servicio.token){
+    //   Swal.fire("Aviso","Ya estas autenticado!","info");
+    //   this.router.navigate([''])
+    // }
 
   }
 
   login():void{
 
-    this.servicio.login(this.usuario).subscribe(
+    this.servicio.login(this.loginForm.value).subscribe(
       resp => {
-                console.log("esto responde:",resp.access_token);
+                //console.log("esto responde:",resp.access_token);
 
-                this.servicio.guardarToken(resp.access_token);
+                //this.servicio.guardarToken(resp.access_token);
 
-                this.servicio.guardarUsuario(resp.access_token);
-
-                Swal.fire('Login',`Hola ${this.usuario.username}, ha iniciado sesión con exito`,'success');
+                //this.servicio.guardarUsuario(resp.access_token);
+                console.log("user",this.loginForm.controls['nombreUsuario'].value);
+                console.log("password",this.loginForm.controls['password'].value);
+                Swal.fire('Login',`Hola ${this.loginForm.controls['nombreUsuario'].value}, ha iniciado sesión con exito`,'success');
 
                 this.router.navigate(['']);
 
