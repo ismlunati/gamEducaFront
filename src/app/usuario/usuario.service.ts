@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Usuario } from './clases/usuario';
+import { Usuario } from './clases/Usuario.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -26,7 +26,7 @@ export class UsuarioService {
     }
     //this._usuario = JSON.parse(localStorage.getItem('usuario') || '{}') as Usuario;
     console.log(this._usuario);
-    return new Usuario();
+    return this._usuario;
   }
 
   //devuelve el token guardado
@@ -109,12 +109,13 @@ export class UsuarioService {
 
   //cerrar login
   logout():void{
-    this._token='';
-    this._usuario = new Usuario();
+    // this._token='';
+    // this._usuario = new Usuario();
     sessionStorage.clear();
     localStorage.clear();
     sessionStorage.removeItem('token');
     localStorage.removeItem('usuario');
+    console.log(localStorage.getItem('usuario'))
   }
 
 

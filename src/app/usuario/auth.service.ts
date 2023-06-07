@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { Usuario } from './clases/usuario';
+import { Usuario } from './clases/Usuario.interface';
 
 interface RegisterResponse {
   token: string;
@@ -81,6 +81,7 @@ logout():void{
   sessionStorage.removeItem('token');
   localStorage.removeItem('usuario');
   this.usuarioSubject.next(null);
+  console.log(localStorage.getItem('usuario'))
 }
 
 

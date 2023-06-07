@@ -1,4 +1,4 @@
-import { Usuario } from './../../usuario/clases/usuario';
+import { Usuario } from './../../usuario/clases/Usuario.interface';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable, of } from 'rxjs';
@@ -33,7 +33,7 @@ export class MenuComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.user_name= this.service.usuario.nombreUsuario;
+    this.user_name= this.service.usuario?.nombreUsuario;
     this.usuario$ = this.authService.usuario$;
   }
 

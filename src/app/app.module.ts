@@ -8,11 +8,15 @@ import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 
 import { WebMainModule } from './web-main/web-main.module';
 import { JwtInterceptor } from './usuario/JwtInterceptor';
+import { ListadoComponent } from './asignatura/asignatura-main/listado/listado.component';
+import { InscripcionComponent } from './asignatura/asignatura-main/inscripcion/inscripcion.component';
+import { AsignaturaModule } from './asignatura/asignatura.module';
 
 
 @NgModule({
   declarations: [
-    AppComponent,
+    AppComponent
+
     
 
   ],
@@ -21,7 +25,8 @@ import { JwtInterceptor } from './usuario/JwtInterceptor';
     AppRoutingModule,
     UsuarioModule,
     HttpClientModule,
-    WebMainModule
+    WebMainModule,
+    AsignaturaModule
   ],
   providers: [{ provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true }],
   bootstrap: [AppComponent]
