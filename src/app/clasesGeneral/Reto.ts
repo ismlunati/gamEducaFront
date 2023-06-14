@@ -3,7 +3,7 @@ import { Logro } from "./Logro";
 import { Tema } from "./Tema";
 
 export interface Reto {
-
+    id:number;
     nombre:string;
     descripcion:string;
     puntosOtorgados:number;

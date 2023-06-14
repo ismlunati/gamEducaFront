@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { AsignaturaService } from '../asignatura.service';
 import { Asignatura } from '../asignatura';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-asignatura-anadir',
@@ -17,7 +17,7 @@ export class AsignaturaAnadirComponent implements OnInit {
   asignatura!: Asignatura;
 
   constructor(private fb: FormBuilder,private asignaturaService: AsignaturaService,
-     private route: ActivatedRoute) {
+      private route: ActivatedRoute, private router: Router) {
 
     this.asignaturaForm = this.fb.group({
       nombre: '',
@@ -30,6 +30,7 @@ export class AsignaturaAnadirComponent implements OnInit {
   ngOnInit(): void {
     this.route.paramMap.subscribe(params => {
       this.idAsignatura = Number(params.get('id'));
+      console.log("Este es el id", this.idAsignatura);
       if (this.idAsignatura) {
         // Aquí va la lógica si existe id
         console.log(`El id es ${this.idAsignatura}`);
@@ -59,13 +60,38 @@ export class AsignaturaAnadirComponent implements OnInit {
 
   }
 
+  metodoActualizarCrear():void{
+    if(this.idAsignatura!==0){
+      console.log("actualizar")
+      this.actualizarAsignatura();
+
+    }else {
+      this.crearAsignatura()
+      console.log("crearAsignatura")
+    }
+  }
+
+
   crearAsignatura(): void {
     this.asignaturaService.crearAsignatura(this.asignaturaForm.value)
       .subscribe((asignaturaCreada: Asignatura) => {
+        this.router.navigate(['/asignaturas']);
         console.log('Asignatura creada', asignaturaCreada);
         // Aquí podrías redirigir al usuario, actualizar la lista de asignaturas, etc.
       });
   }
 
+
+  actualizarAsignatura(): void {
+
+    Object.assign(this.asignatura, this.asignaturaForm.value);
+
+
+    this.asignaturaService.actualizarAsignatura(this.asignatura)
+      .subscribe((asignaturaCreada: Asignatura) => {
+        console.log('Asignatura actualizada', asignaturaCreada);
+        // Aquí podrías redirigir al usuario, actualizar la lista de asignaturas, etc.
+      });
+  }
 
 }

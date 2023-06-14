@@ -8,6 +8,7 @@ import { AsignaturaComponent } from './asignatura.component';
 import { RouterModule } from '@angular/router';
 import { AsignaturaMainComponent } from './asignatura-main/asignatura-main.component';
 import { AsignaturaAnadirComponent } from './asignatura-anadir/asignatura-anadir.component';
+import { AsignaturaNavigateComponent } from './asignatura-navigate/asignatura-navigate.component';
 
 
 
@@ -20,7 +21,8 @@ import { AsignaturaAnadirComponent } from './asignatura-anadir/asignatura-anadir
     SolicitudesPendientesComponent,
     AsignaturaComponent,
     AsignaturaMainComponent,
-    AsignaturaAnadirComponent
+    AsignaturaAnadirComponent,
+    AsignaturaNavigateComponent
 
   ],
   exports:[

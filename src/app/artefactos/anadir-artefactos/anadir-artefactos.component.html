@@ -1,0 +1,44 @@
+<p>anadir-artefactos works!</p>
+
+<div class="container mt-4">
+  <div class="row justify-content-center">
+    <div class="col-lg-6">
+      <form [formGroup]="artefactoForm" (ngSubmit)="metodoActualizarCrear()" class="mt-4">
+        <div class="mb-3">
+          <label for="nombre" class="form-label">Nombre del artefacto</label>
+          <input type="text" class="form-control" id="nombre" formControlName="nombre" placeholder="Introduce el nombre">
+        </div>
+        <div class="mb-3">
+          <label for="descripcion" class="form-label">Descripción del artefacto</label>
+          <input type="text" class="form-control" id="descripcion" formControlName="descripcion" placeholder="Introduce la descripción">
+        </div>
+        <div class="mb-3">
+          <label for="coste" class="form-label">Coste del artefacto</label>
+          <input type="number" class="form-control" id="coste" formControlName="coste" placeholder="Introduce el coste">
+        </div>
+        <div class="mb-3">
+          <label for="temporal" class="form-label">Repetible</label>
+          <input type="checkbox" class="form-check-input" id="temporal" formControlName="repetible">
+        </div>
+        <div class="mb-3">
+          <label for="temporal" class="form-label">Temporal</label>
+          <input type="checkbox" class="form-check-input" id="temporal" formControlName="temporal">
+        </div>
+        <div class="mb-3">
+          <label for="fechaInicio" class="form-label">Fecha Inicio</label>
+          <input type="date" class="form-control" id="fechaInicio" formControlName="fechaInicio" placeholder="Introduce la fecha de inicio" [disabled]="true">
+        </div>
+        <div class="mb-3">
+          <label for="fechaFin" class="form-label">Fecha Fin</label>
+          <input type="date" class="form-control" id="fechaFin" formControlName="fechaFin" placeholder="Introduce la fecha de fin" [disabled]="!artefactoForm.get('temporal')?.value">
+        </div>
+
+        <button type="submit" class="btn btn-primary" *ngIf="esProfesor()">
+          <span *ngIf="idArtefacto!==0">Actualizar Asignatura</span>
+          <span *ngIf="idArtefacto==0">Crear Asignatura</span>
+        </button>
+        <button type="button" style="margin-left: 20px;" class="btn btn-secondary ml-10" [routerLink]="['/asignaturas',idAsignatura,'artefactos','listado']">Volver</button>
+      </form>
+    </div>
+  </div>
+</div>

@@ -1,3 +1,4 @@
+import { AnadirArtefactosComponent } from './artefactos/anadir-artefactos/anadir-artefactos.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { LoginComponent } from './usuario/login/login.component';
@@ -9,6 +10,18 @@ import { SolicitudesPendientesComponent } from './asignatura/solicitudes-pendien
 import { AsignaturaComponent } from './asignatura/asignatura.component';
 import { AsignaturaMainComponent } from './asignatura/asignatura-main/asignatura-main.component';
 import { AsignaturaAnadirComponent } from './asignatura/asignatura-anadir/asignatura-anadir.component';
+import { AsignaturaNavigateComponent } from './asignatura/asignatura-navigate/asignatura-navigate.component';
+import { RetosComponent } from './retos/retos.component';
+import { TemasComponent } from './tema/temas.component';
+import { ListadoTemasComponent } from './tema/listado-temas/listado-temas.component';
+import { AnadirTemaComponent } from './tema/anadir-tema/anadir-tema.component';
+import { ArtefactosComponent } from './artefactos/artefactos.component';
+import { ListadoArtefactosComponent } from './artefactos/listado-artefactos/listado-artefactos.component';
+import { LogrosComponent } from './logros/logros.component';
+import { ListadoLogrosComponent } from './logros/listado-logros/listado-logros.component';
+import { AnadirLogrosComponent } from './logros/anadir-logros/anadir-logros.component';
+import { ListadoRetosComponent } from './retos/listado-retos/listado-retos.component';
+import { AnadirRetosComponent } from './retos/anadir-retos/anadir-retos.component';
 
 const routes: Routes = [
 
@@ -43,7 +56,95 @@ const routes: Routes = [
     {
       path:':id/editar',
       component:AsignaturaAnadirComponent
-    }
+    },
+    {
+      path:':id',
+      component:AsignaturaNavigateComponent
+    },
+    {
+      path:':id/temas',
+      component:TemasComponent,
+      children: [
+        {
+          path:'listado',
+          component:ListadoTemasComponent
+        },
+        {
+          path:'añadir',
+          component:AnadirTemaComponent
+        },
+        {
+          path:':id/editar',
+          component:AnadirTemaComponent
+        },
+      ]
+    },
+    {
+      path:':id/retos',
+      component:RetosComponent,
+      children: [
+        {
+          path:'listado',
+          component:ListadoRetosComponent
+        },
+        {
+          path:'añadir',
+          component:AnadirRetosComponent
+        },
+        {
+          path:':id/editar',
+          component:AnadirRetosComponent
+        },
+      ]
+    }, 
+    {
+      path:':id/artefactos',
+      component:ArtefactosComponent,
+      children:[
+
+
+        {
+          path:'listado',
+          component:ListadoArtefactosComponent
+        },
+
+        {
+          path:'añadir',
+          component:AnadirArtefactosComponent
+        },
+        {
+          path:':id/editar',
+          component:AnadirArtefactosComponent
+        }
+
+
+
+      ]
+    },
+    {
+    path:':id/logros',
+    component:LogrosComponent,
+    children:[
+
+
+        {
+          path:'listado',
+          component:ListadoLogrosComponent
+        },
+
+        {
+          path:'añadir',
+          component:AnadirLogrosComponent
+        },
+        {
+          path:':id/editar',
+          component:AnadirLogrosComponent
+        }
+
+
+
+      ]
+    },
 
   ]
 },

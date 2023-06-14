@@ -1,0 +1,11 @@
+<p>asignatura-navigate works!</p>
+<h1>ID de la asignatura: {{id}}</h1>
+
+<div class="d-flex justify-content-around">
+    <button class="btn btn-primary"   [routerLink]="['/asignaturas', id, 'temas','listado']">Temas</button>
+    <button class="btn btn-success"   [routerLink]="['/asignaturas', id, 'logros','listado']">Logros</button>
+    <button class="btn btn-warning" [routerLink]="['/asignaturas', id, 'artefactos','listado']">Artefactos</button>
+    <button class="btn btn-danger">Tienda</button>
+    <button class="btn btn-info" [routerLink]="['/asignaturas', id, 'retos','listado']">Retos</button>
+  </div>
+

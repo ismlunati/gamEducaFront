@@ -16,20 +16,20 @@
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let asignatura of asignaturas">
+            <tr *ngFor="let asignatura of asignaturas" (click)="navegar(asignatura.id)">
               
               <td>{{asignatura.nombre}}</td>
               <td>{{asignatura.descripcion}}</td>
               <td>{{asignatura.curso}}</td>
               <td>{{asignatura.codigo}}</td>
               <td *ngIf="!alumno">
-                <button class="btn btn-primary" [routerLink]="['/asignaturas', asignatura.id, 'listaSolicitudesPendientes']">Solicitudes</button>
+                <button class="btn btn-primary" [routerLink]="['/asignaturas', asignatura.id, 'listaSolicitudesPendientes']" (click)="$event.stopPropagation()">Solicitudes</button>
               </td>
               <td *ngIf="!alumno">
-                <button class="btn btn-primary" [routerLink]="['/asignaturas', asignatura.id, 'editar']">Editar</button>
+                <button class="btn btn-primary" [routerLink]="['/asignaturas', asignatura.id, 'editar']" (click)="$event.stopPropagation()">Editar</button>
               </td>
               <td *ngIf="!alumno">
-                <button class="btn btn-primary" (click)="borrarAsignatura(asignatura.id)">Eliminar</button>
+                <button class="btn btn-primary" (click)="borrarAsignatura(asignatura.id); $event.stopPropagation()">Eliminar</button>
               </td>
               
               <!-- etc., agrega más celdas si necesitas -->
@@ -38,6 +38,8 @@
         </table>
         <div class="mt-3" *ngIf="!alumno">
           <button class="btn btn-primary" routerLink="/asignaturas/añadir">Añadir</button>
+          
+
         </div>
       </div>
     </div>

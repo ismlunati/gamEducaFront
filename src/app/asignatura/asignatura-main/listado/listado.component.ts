@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Asignatura } from '../../asignatura';
 import { AsignaturaService } from '../../asignatura.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-listado',
@@ -12,7 +13,7 @@ export class ListadoComponent implements OnInit {
 
   @Input() alumno!: boolean;
 
-  constructor(private asignaturaService: AsignaturaService) { }
+  constructor(private asignaturaService: AsignaturaService, private router:Router) { }
 
   ngOnInit(): void {
     this.asignaturaService.getAsignaturas().subscribe(asignaturas => {
@@ -22,6 +23,10 @@ export class ListadoComponent implements OnInit {
     });
   }
 
+
+  navegar(id: number) {
+    this.router.navigate(['/asignaturas', id]);
+  }
 
   borrarAsignatura(idAsignatura: number): void {
     this.asignaturaService.borrarAsignatura(idAsignatura).subscribe(
