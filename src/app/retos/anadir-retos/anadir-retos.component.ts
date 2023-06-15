@@ -1,10 +1,11 @@
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 import { AsignaturaService } from 'src/app/asignatura/asignatura.service';
 import { AuthService } from 'src/app/usuario/auth.service';
 import { ActivatedRoute } from '@angular/router';
 import { Reto } from 'src/app/clasesGeneral/Reto';
 import { Asignatura } from 'src/app/asignatura/asignatura';
+import { Logro } from 'src/app/clasesGeneral/Logro';
 
 @Component({
   selector: 'app-anadir-retos',
@@ -12,8 +13,9 @@ import { Asignatura } from 'src/app/asignatura/asignatura';
 })
 export class AnadirRetosComponent implements OnInit {
 
-  retoForm: FormGroup;
+  retoForm!: FormGroup;
 
+  logrosAsignatura!:Logro[];
   idAsignatura:number | null = null;
 
   idReto:number | null = null;
@@ -24,15 +26,30 @@ export class AnadirRetosComponent implements OnInit {
   constructor(private fb: FormBuilder,private asignaturaService: AsignaturaService,
      private route: ActivatedRoute, private authService:AuthService) {
 
-    this.retoForm = this.fb.group({
-      nombre: '',
-      descripcion: ''
+      // this.retoForm = this.fb.group({
+      //   nombre: [''],
+      //   descripcion: [''],
+      //   puntosOtorgados: [''],
+      //   temporal: [false],
+      //   fechaInicio: [{value: '', disabled: true}],
+      //   fechaFin: [{value: '', disabled: true}],
+      //   logro: ['']
+      // });
       // puedes agregar más controles de formularios aquí
-    });
    }
 
   ngOnInit(): void {
     //this.route.snapshot.parent?.paramMap.get('id')
+
+    this.retoForm = this.fb.group({
+      nombre: new FormControl(''),
+      descripcion: new FormControl(''),
+      puntosOtorgados: new FormControl(''),
+      temporal: new FormControl(false),
+      fechaInicio: new FormControl({ value: '', disabled: true }),
+      fechaFin: new FormControl({ value: '', disabled: true }),
+      logro: new FormControl('')
+    });
 
       this.idAsignatura = +this.route.snapshot.parent?.paramMap.get('id')!;
 
@@ -41,16 +58,15 @@ export class AnadirRetosComponent implements OnInit {
 
       console.log("Este es el id del reto", this.idReto);
       
-      if (this.idAsignatura) {
+      if (this.idReto!==0) {
         // Aquí va la lógica si existe id
         console.log(`El id es ${this.idAsignatura}`);
 
         this.asignaturaService.getRetoPorId(this.idAsignatura,this.idReto).subscribe(reto => {
           this.reto = reto;
   
-          console.log("Procedo a imprimir los alumnos");
-          console.log("Procedo a imprimir idAsignatura");
-          console.log(reto);
+
+          console.log("ESTE ES EL RETO",reto);
           console.log(this.idAsignatura);
 
           this.retoForm.patchValue({
@@ -59,13 +75,30 @@ export class AnadirRetosComponent implements OnInit {
           });
         });
 
+        
+
 
       } else {
         // Aquí va la lógica si no existe id
         console.log('Es operacion /save');
       }
 
+      this.asignaturaService.getLogrosPorAsignatura(this.idAsignatura).subscribe(logros => {
+        this.logrosAsignatura = logros;
 
+      });
+
+
+
+      this.retoForm.get('temporal')?.valueChanges.subscribe(temporal => {
+        if (temporal) {
+          this.retoForm.get('fechaInicio')?.enable();
+          this.retoForm.get('fechaFin')?.enable();
+        } else {
+          this.retoForm.get('fechaInicio')?.disable();
+          this.retoForm.get('fechaFin')?.disable();
+        }
+      });
 
   }
 

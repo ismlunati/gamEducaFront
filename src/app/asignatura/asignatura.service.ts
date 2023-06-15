@@ -246,8 +246,9 @@ export class AsignaturaService {
 
   crearArtefacto(artefacto: Artefacto, id:number): Observable<Artefacto> {
 
-    const token = sessionStorage.getItem('token'); // Recupera el token desde donde lo tengas almacenado
-    console.log(token);
+    const token = sessionStorage.getItem('token');
+     // Recupera el token desde donde lo tengas almacenado
+    console.log("Estoy enviando este artefacto:", artefacto );
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type':  'application/json',

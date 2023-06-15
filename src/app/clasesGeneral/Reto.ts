@@ -7,6 +7,9 @@ export interface Reto {
     nombre:string;
     descripcion:string;
     puntosOtorgados:number;
+    temporal:boolean;
+    fechaInicio: Date;
+    fechaFin: Date;
     logro:Logro;
     tema:Tema;
     asignatura:Asignatura;

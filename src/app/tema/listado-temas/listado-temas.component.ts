@@ -38,7 +38,7 @@ export class ListadoTemasComponent implements OnInit {
 
 
   borrarTema(idTema: number): void {
-    this.asignaturaService.borrarTema(idTema, this.id).subscribe(
+    this.asignaturaService.borrarTema( this.id,idTema).subscribe(
       res => {
         console.log('Asignatura borrada exitosamente');
         this.temas = this.temas.filter(tema => tema.id !== idTema);

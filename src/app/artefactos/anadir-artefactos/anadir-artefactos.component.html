@@ -26,11 +26,11 @@
         </div>
         <div class="mb-3">
           <label for="fechaInicio" class="form-label">Fecha Inicio</label>
-          <input type="date" class="form-control" id="fechaInicio" formControlName="fechaInicio" placeholder="Introduce la fecha de inicio" [disabled]="true">
+          <input type="date" class="form-control" id="fechaInicio" formControlName="fechaInicio" placeholder="Introduce la fecha de inicio">
         </div>
         <div class="mb-3">
           <label for="fechaFin" class="form-label">Fecha Fin</label>
-          <input type="date" class="form-control" id="fechaFin" formControlName="fechaFin" placeholder="Introduce la fecha de fin" [disabled]="!artefactoForm.get('temporal')?.value">
+          <input type="date" class="form-control" id="fechaFin" formControlName="fechaFin" placeholder="Introduce la fecha de fin">
         </div>
 
         <button type="submit" class="btn btn-primary" *ngIf="esProfesor()">

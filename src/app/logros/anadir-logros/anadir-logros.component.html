@@ -12,6 +12,12 @@
             <input type="text" class="form-control" id="descripcion" formControlName="descripcion" placeholder="Introduce la descripción">
           </div>
   
+          <div class="mb-3">
+            <label for="artefacto" class="form-label">Artefacto</label>
+            <select class="form-control" id="artefacto" formControlName="artefacto">
+              <option *ngFor="let artefacto of artefactosAsignatura" [value]="artefacto.id">{{ artefacto.nombre }}</option>
+            </select>
+          </div>
           <button type="submit" class="btn btn-primary" *ngIf="esProfesor()">
             <span *ngIf="idLogro!==0">Actualizar Asignatura</span>
             <span *ngIf="idLogro==0">Crear Asignatura</span>

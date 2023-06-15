@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Asignatura } from 'src/app/asignatura/asignatura';
 import { AsignaturaService } from 'src/app/asignatura/asignatura.service';
+import { Artefacto } from 'src/app/clasesGeneral/Artefacto';
 import { Logro } from 'src/app/clasesGeneral/Logro';
 import { AuthService } from 'src/app/usuario/auth.service';
 
@@ -21,12 +22,15 @@ export class AnadirLogrosComponent implements OnInit {
   logro!: Logro;
   asignatura!: Asignatura;
 
+  artefactosAsignatura!:Artefacto[];
+
   constructor(private fb: FormBuilder,private asignaturaService: AsignaturaService,
      private route: ActivatedRoute, private authService:AuthService) {
 
     this.logroForm = this.fb.group({
       nombre: '',
-      descripcion: ''
+      descripcion: '',
+      artefacto:''
       // puedes agregar más controles de formularios aquí
     });
    }
@@ -66,6 +70,15 @@ export class AnadirLogrosComponent implements OnInit {
       }
 
 
+
+      this.asignaturaService.getArtefactosPorAsignatura(this.idAsignatura).subscribe(artefactos => {
+        this.artefactosAsignatura = artefactos;
+
+        console.log("Procedo a imprimir los artefactos disponibles", artefactos);
+
+
+
+      });
 
   }
 

@@ -25,7 +25,7 @@ export class ListadoRetosComponent implements OnInit {
 
     this.asignaturaService.getRetosPorAsignatura(this.id).subscribe(retos => {
       this.retos = retos;
-      console.log("procedo a imprimir las asignaturas",this.retos);
+      console.log("Retos",this.retos);
       //console.log("Estoy imprimiendo el valor de alumno", this.alumno);
     });
 

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Asignatura } from 'src/app/asignatura/asignatura';
 import { AsignaturaService } from 'src/app/asignatura/asignatura.service';
@@ -12,7 +12,7 @@ import { AuthService } from 'src/app/usuario/auth.service';
 })
 export class AnadirArtefactosComponent implements OnInit {
 
-  artefactoForm: FormGroup;
+  artefactoForm!: FormGroup;
 
   idAsignatura:number | null = null;
 
@@ -24,20 +24,32 @@ export class AnadirArtefactosComponent implements OnInit {
   constructor(private fb: FormBuilder,private asignaturaService: AsignaturaService,
      private route: ActivatedRoute, private authService:AuthService) {
 
-    this.artefactoForm = this.fb.group({
-      nombre: [''], // valor inicial vacío
-      descripcion: [''], // valor inicial vacío
-      coste: [0], // valor inicial 0
-      repetible: [false], // valor inicial false
-      temporal: [false], // valor inicial false
-      fechaInicio:  [{value: '', disabled: true}], // valor inicial vacío
-      fechaFin:  [{value: '', disabled: true}], // valor inicial vacío
-    });
+    // this.artefactoForm = this.fb.group({
+    //   nombre: [''], // valor inicial vacío
+    //   descripcion: [''], // valor inicial vacío
+    //   coste: [0], // valor inicial 0
+    //   repetible: [false], // valor inicial false
+    //   temporal: [false], // valor inicial false
+    //   fechaInicio:  [{value: '', disabled: true}], // valor inicial vacío
+    //   fechaFin:  [{value: '', disabled: true}], // valor inicial vacío
+    // });
   }
 
 
   ngOnInit(): void {
     //this.route.snapshot.parent?.paramMap.get('id')
+
+    this.artefactoForm = this.fb.group({
+      nombre: new FormControl(''),
+      descripcion: new FormControl(''),
+      coste: new FormControl(''),
+      repetible: new FormControl(false),
+      temporal: new FormControl(false),
+      fechaInicio: new FormControl({ value: '', disabled: true }),
+      fechaFin: new FormControl({ value: '', disabled: true })
+    });
+
+
 
       this.idAsignatura = +this.route.snapshot.parent?.paramMap.get('id')!;
 
@@ -46,7 +58,7 @@ export class AnadirArtefactosComponent implements OnInit {
 
       console.log("Este es el id del artefacto", this.idArtefacto);
       
-      if (this.idAsignatura) {
+      if (this.idArtefacto!==0) {
         // Aquí va la lógica si existe id
         console.log(`El id es ${this.idAsignatura}`);
 
@@ -64,9 +76,9 @@ export class AnadirArtefactosComponent implements OnInit {
             coste: this.artefacto.costePuntos,
             repetible: this.artefacto.repetible, // valor inicial false
             temporal: this.artefacto.temporal, // valor inicial false
-            fechaInicio: this.artefacto.fechaInicio, // valor inicial vacío
-            fechaFin:  this.artefacto.fechaFin, // valor inicial vacío
-          });
+            fechaInicio: this.artefacto.fechaInicio ? this.artefacto.fechaInicio.toISOString().split('T')[0] : '',
+            fechaFin: this.artefacto.fechaFin ? this.artefacto.fechaFin.toISOString().split('T')[0] : ''
+                    });
         });
 
 

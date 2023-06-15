@@ -8,6 +8,7 @@ export interface Logro {
     beneficio:number;
     estado:boolean;
     retos:Reto[];
+    artefacto:Artefacto;
     artefactosDesbloqueados:Artefacto[];
 
 
