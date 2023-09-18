@@ -20,19 +20,24 @@ export class AnadirLogrosComponent implements OnInit {
   idLogro:number | null = null;
 
   logro!: Logro;
-  asignatura!: Asignatura;
+
 
   artefactosAsignatura!:Artefacto[];
 
   constructor(private fb: FormBuilder,private asignaturaService: AsignaturaService,
      private route: ActivatedRoute, private authService:AuthService) {
 
-    this.logroForm = this.fb.group({
-      nombre: '',
-      descripcion: '',
-      artefacto:''
-      // puedes agregar más controles de formularios aquí
-    });
+      this.logroForm = this.fb.group({
+        nombre: '',
+        descripcion: '',
+        artefactoLogro: this.fb.group({
+          desbloquear: [false],
+          obtener: [false],
+          artefacto: ''
+        }),
+      });
+      
+
    }
 
   ngOnInit(): void {
@@ -45,28 +50,38 @@ export class AnadirLogrosComponent implements OnInit {
 
       console.log("Este es el id del logro", this.idLogro);
       
-      if (this.idAsignatura) {
+      if ( this.idLogro!==0) {
         // Aquí va la lógica si existe id
         console.log(`El id es ${this.idAsignatura}`);
 
         this.asignaturaService.getLogroPorId(this.idAsignatura,this.idLogro).subscribe(logro => {
           this.logro = logro;
   
-          console.log("Procedo a imprimir los alumnos");
-          console.log("Procedo a imprimir idAsignatura");
-          console.log(logro);
-          console.log(this.idAsignatura);
+
+          console.log("este es el logro",logro);
+          console.log("este es el nombre artefacto",this.logro.artefactoLogros?.artefacto.nombre);
+
+
+          
 
           this.logroForm.patchValue({
             nombre: this.logro.nombre,
-            descripcion: this.logro.descripcion
+            descripcion: this.logro.descripcion,
+            artefactoLogro: this.fb.group({
+              desbloquear: this.logro?.artefactoLogros?.desbloquear,
+              obtener: this.logro?.artefactoLogros?.obtener,
+              artefacto: this.logro.artefactoLogros?.artefacto.id
+            })
+
+
+
           });
         });
 
 
       } else {
         // Aquí va la lógica si no existe id
-        console.log('Es operacion /save');
+        console.log('Es operacion /saveNueevo');
       }
 
 
@@ -88,17 +103,35 @@ export class AnadirLogrosComponent implements OnInit {
       this.actualizarLogro();
 
     }else {
-
+      console.log("crearLogro",this.logroForm.value )
       this.crearLogro()
-      console.log("crearAsignatura")
+      
     }
   }
 
 
   crearLogro(): void {
-    this.asignaturaService.crearLogro(this.logroForm.value,this.idAsignatura!)
-      .subscribe((asignaturaCreada: Logro) => {
-        console.log('Asignatura creada', asignaturaCreada);
+
+    const formValues = this.logroForm.value;
+    console.log("artefactoDI", formValues.artefactoLogro.artefacto);
+    console.log("artefactoIDBD", this.artefactosAsignatura[0].id);
+    const selectedArtefacto = this.artefactosAsignatura.find(artefacto => artefacto.id === formValues.artefactoLogro.artefacto);
+    
+
+  console.log("Este es el artefacto que se postea", selectedArtefacto);
+    const logroPost: Logro = {
+      ...formValues,  // Esto copia los valores de nombre, descripcion, etc. del formulario
+      artefactoLogros: {
+          ...formValues.artefactoLogro,  // Esto copia los valores de desbloquear y obtener del formulario
+          artefacto: this.artefactosAsignatura[0]  // Esto reemplaza el id de artefacto con el objeto completo de Artefacto
+      }
+  };
+  console.log("Logro posteado", logroPost)
+
+  //en vez de mandar this.logroForm.value voy a mandar logro
+    this.asignaturaService.crearLogro(logroPost,this.idAsignatura!)
+      .subscribe((logro: Logro) => {
+        console.log('logro creada', logro);
         // Aquí podrías redirigir al usuario, actualizar la lista de asignaturas, etc.
       });
   }

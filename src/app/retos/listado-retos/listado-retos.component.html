@@ -1,5 +1,17 @@
 <p>listado-retos works!</p>
 <div class="container mt-4">
+
+  <select [(ngModel)]="estadoSeleccionado" *ngIf="listaSeleccionada ==='Retos inscritos'">
+    <option *ngFor="let estado of estados" [value]="estado">{{estado}}</option>
+  </select>
+  
+  <button (click)="filtrarPorEstado()"  *ngIf="listaSeleccionada ==='Retos inscritos'">Filtrar</button>
+
+  <select [(ngModel)]="listaSeleccionada" (change)="onSelectChange()">
+    <option *ngFor="let lista of listas" [value]="lista">{{lista}}</option>
+  </select>
+  
+  
   <div class="row">
     <div class="col">
       <table class="table table-striped">
@@ -13,19 +25,23 @@
             <th>Fecha de Fin</th>
             <th>Logro</th>
             <th *ngIf="esProfesor()">Eliminar</th>
+            <th *ngIf="!esProfesor()">Unirse</th>
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let reto of retos" (click)="navegar(reto.id)">
+          <tr *ngFor="let reto of retosFiltrados" (click)="navegar(reto.id)">
             <td>{{ reto.nombre }}</td>
             <td>{{ reto.descripcion }}</td>
             <td>{{ reto.puntosOtorgados }}</td>
             <td>{{ reto.temporal }}</td>
             <td>{{ reto.fechaInicio }}</td>
             <td>{{ reto.fechaFin }}</td>
-            <td>{{ reto.logro.nombre }}</td>
+            <td>{{ reto?.logro?.nombre }}</td>
             <td *ngIf="esProfesor()">
               <button class="btn btn-primary" (click)="borrarReto(reto.id); $event.stopPropagation()">Eliminar</button>
+            </td>
+            <td *ngIf="!esProfesor()">
+              <button class="btn btn-primary" (click)="unirseReto(reto.id, reto.nombre); $event.stopPropagation()">Unirse Reto</button>
             </td>
           </tr>
         </tbody>

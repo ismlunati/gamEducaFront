@@ -11,6 +11,7 @@ import { RetoModule } from './retos/reto.module';
 import { TemaModule } from './tema/tema.module';
 import { ArtefactosModule } from './artefactos/artefactos.module';
 import { LogrosModule } from './logros/logros.module';
+import { TestModule } from './preguntas/test.module';
 
 
 @NgModule({
@@ -29,7 +30,8 @@ import { LogrosModule } from './logros/logros.module';
     TemaModule,
     RetoModule,
     ArtefactosModule,
-    LogrosModule
+    LogrosModule,
+    TestModule
   ],
   providers: [{ provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true }],
   bootstrap: [AppComponent]

@@ -1,6 +1,5 @@
-import { Asignatura } from "../asignatura/asignatura";
+import { AlumnoReto } from "./AlumnoReto";
 import { Logro } from "./Logro";
-import { Tema } from "./Tema";
 
 export interface Reto {
     id:number;
@@ -10,9 +9,8 @@ export interface Reto {
     temporal:boolean;
     fechaInicio: Date;
     fechaFin: Date;
+    automatico:boolean;
     logro:Logro;
-    tema:Tema;
-    asignatura:Asignatura;
-
+    alumnoRetos:AlumnoReto[];
 
 }

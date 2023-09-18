@@ -22,136 +22,160 @@ import { ListadoLogrosComponent } from './logros/listado-logros/listado-logros.c
 import { AnadirLogrosComponent } from './logros/anadir-logros/anadir-logros.component';
 import { ListadoRetosComponent } from './retos/listado-retos/listado-retos.component';
 import { AnadirRetosComponent } from './retos/anadir-retos/anadir-retos.component';
+import { TestComponent } from './preguntas/test.component';
+import { TestListComponent } from './preguntas/test-list.component';
+import { TestPreguntaComponent } from './preguntas/test-pregunta.component';
+import { TestResultadosComponent } from './preguntas/test-resultados.component';
 
 const routes: Routes = [
 
-{
-  path:'',
-  component:FooterComponent
-},
-{
-  path:'login',
-  component:LoginComponent
-},
-{
-  path:'register',
-  component:RegisterComponent
-},
-{
-  path:'asignaturas',
-  component:AsignaturaComponent,
-  children: [
-    {
-      path:':id/listaSolicitudesPendientes',
-      component:SolicitudesPendientesComponent
-    },
-    {
-      path:'',
-      component:AsignaturaMainComponent
-    },
-    {
-      path:'añadir',
-      component:AsignaturaAnadirComponent
-    },
-    {
-      path:':id/editar',
-      component:AsignaturaAnadirComponent
-    },
-    {
-      path:':id',
-      component:AsignaturaNavigateComponent
-    },
-    {
-      path:':id/temas',
-      component:TemasComponent,
-      children: [
-        {
-          path:'listado',
-          component:ListadoTemasComponent
-        },
-        {
-          path:'añadir',
-          component:AnadirTemaComponent
-        },
-        {
-          path:':id/editar',
-          component:AnadirTemaComponent
-        },
-      ]
-    },
-    {
-      path:':id/retos',
-      component:RetosComponent,
-      children: [
-        {
-          path:'listado',
-          component:ListadoRetosComponent
-        },
-        {
-          path:'añadir',
-          component:AnadirRetosComponent
-        },
-        {
-          path:':id/editar',
-          component:AnadirRetosComponent
-        },
-      ]
-    }, 
-    {
-      path:':id/artefactos',
-      component:ArtefactosComponent,
-      children:[
+  {
+    path: '',
+    component: FooterComponent
+  },
+  {
+    path: 'login',
+    component: LoginComponent
+  },
+  {
+    path: 'register',
+    component: RegisterComponent
+  },
+  {
+    path: 'asignaturas',
+    component: AsignaturaComponent,
+    children: [
+      {
+        path: ':id/listaSolicitudesPendientes',
+        component: SolicitudesPendientesComponent
+      },
+      {
+        path: '',
+        component: AsignaturaMainComponent
+      },
+      {
+        path: 'añadir',
+        component: AsignaturaAnadirComponent
+      },
+      {
+        path: ':id/editar',
+        component: AsignaturaAnadirComponent
+      },
+      {
+        path: ':id',
+        component: AsignaturaNavigateComponent
+      },
+      {
+        path: ':id/temas',
+        component: TemasComponent,
+        children: [
+          {
+            path: 'listado',
+            component: ListadoTemasComponent
+          },
+          {
+            path: 'añadir',
+            component: AnadirTemaComponent
+          },
+          {
+            path: ':id/editar',
+            component: AnadirTemaComponent
+          },
+        ]
+      },
+      {
+        path: ':id/retos',
+        component: RetosComponent,
+        children: [
+          {
+            path: 'listado',
+            component: ListadoRetosComponent
+          },
+          {
+            path: 'añadir',
+            component: AnadirRetosComponent
+          },
+          {
+            path: ':id/editar',
+            component: AnadirRetosComponent
+          },
+        ]
+      },
+      {
+        path: ':id/artefactos',
+        component: ArtefactosComponent,
+        children: [
 
 
-        {
-          path:'listado',
-          component:ListadoArtefactosComponent
-        },
+          {
+            path: 'listado',
+            component: ListadoArtefactosComponent
+          },
 
-        {
-          path:'añadir',
-          component:AnadirArtefactosComponent
-        },
-        {
-          path:':id/editar',
-          component:AnadirArtefactosComponent
-        }
-
-
-
-      ]
-    },
-    {
-    path:':id/logros',
-    component:LogrosComponent,
-    children:[
-
-
-        {
-          path:'listado',
-          component:ListadoLogrosComponent
-        },
-
-        {
-          path:'añadir',
-          component:AnadirLogrosComponent
-        },
-        {
-          path:':id/editar',
-          component:AnadirLogrosComponent
-        }
+          {
+            path: 'añadir',
+            component: AnadirArtefactosComponent
+          },
+          {
+            path: ':id/editar',
+            component: AnadirArtefactosComponent
+          }
 
 
 
-      ]
-    },
+        ]
+      },
+      {
+        path: ':id/logros',
+        component: LogrosComponent,
+        children: [
 
-  ]
-},
-{
-  path:'inscripcion',
-  component:InscripcionComponent
-}
+
+          {
+            path: 'listado',
+            component: ListadoLogrosComponent
+          },
+
+          {
+            path: 'añadir',
+            component: AnadirLogrosComponent
+          },
+          {
+            path: ':id/editar',
+            component: AnadirLogrosComponent
+          }
+
+
+
+        ]
+      },
+
+    ]
+  },
+  {
+    path: 'inscripcion',
+    component: InscripcionComponent
+  },
+
+  {
+    path: 'test',
+    component: TestComponent
+  }, // Añadir esta línea para la ruta de Test
+
+  {
+    path: 'verTest',
+    component: TestListComponent
+  }, // Añadir esta línea para la ruta de Test
+
+  {
+    path: 'test-pregunta/:idAsignatura/:idTest',
+    component: TestPreguntaComponent
+  },
+
+  {
+    path: 'test-resultados/:idAsignatura/:idTest',
+    component: TestResultadosComponent
+  }, // Añadir esta línea para la ruta de Test
 
 
 ];

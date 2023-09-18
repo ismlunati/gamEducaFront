@@ -1,4 +1,5 @@
 import { Asignatura } from "../asignatura/asignatura";
+import { ArtefactoLogro } from "./ArtefactoLogro";
 import { Logro } from "./Logro";
 
 export interface Artefacto {
@@ -12,6 +13,6 @@ export interface Artefacto {
     fechaInicio: Date;
     fechaFin: Date;
     asignatura: Asignatura;
-    logro:Logro;
+    artefactoLogros:ArtefactoLogro[];
 
 }

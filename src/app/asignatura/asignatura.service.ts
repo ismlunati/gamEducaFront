@@ -20,7 +20,6 @@ export class AsignaturaService {
   getAsignaturas(): Observable<Asignatura[]> {
 
     const token = sessionStorage.getItem('token'); // Recupera el token desde donde lo tengas almacenado
-    console.log(token);
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type':  'application/json',
@@ -33,7 +32,7 @@ export class AsignaturaService {
   getAsignaturaListaSolicitudes(idAsignatura: number): Observable<Alumno[]> {
 
     const token = sessionStorage.getItem('token'); // Recupera el token desde donde lo tengas almacenado
-    console.log(token);
+    
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type':  'application/json',
@@ -46,7 +45,7 @@ export class AsignaturaService {
   getAsignaturaPorId(idAsignatura: number): Observable<Asignatura> {
 
     const token = sessionStorage.getItem('token'); // Recupera el token desde donde lo tengas almacenado
-    console.log(token);
+    
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type':  'application/json',
@@ -59,20 +58,20 @@ export class AsignaturaService {
   getLogroPorId(idAsignatura: number, idLogro: number): Observable<Logro> {
 
     const token = sessionStorage.getItem('token'); // Recupera el token desde donde lo tengas almacenado
-    console.log(token);
+    
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type':  'application/json',
         'Authorization': `Bearer ${token}`
       })
     };
-    return this.http.get<Logro>(`${this.urlApi}/${idAsignatura}/logros/${idLogro}`, httpOptions); // Asegúrate de usar tu URL correcta
+    return this.http.get<Logro>(`${this.urlApi}/${idAsignatura}/logrosDTO/${idLogro}`, httpOptions); // Asegúrate de usar tu URL correcta
   }
 
   getTemaPorId(idAsignatura: number, idTema:number): Observable<Tema> {
 
     const token = sessionStorage.getItem('token'); // Recupera el token desde donde lo tengas almacenado
-    console.log(token);
+    
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type':  'application/json',
@@ -86,34 +85,35 @@ export class AsignaturaService {
   getArtefactoPorId(idAsignatura: number, idArtefacto:number): Observable<Artefacto> {
 
     const token = sessionStorage.getItem('token'); // Recupera el token desde donde lo tengas almacenado
-    console.log(token);
+    
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type':  'application/json',
         'Authorization': `Bearer ${token}`
       })
     };
-    return this.http.get<Artefacto>(`${this.urlApi}/${idAsignatura}/artefactos/${idArtefacto}`, httpOptions); // Asegúrate de usar tu URL correcta
+    console.log(`${this.urlApi}/${idAsignatura}/artefactosDTO/${idArtefacto}`)
+    return this.http.get<Artefacto>(`${this.urlApi}/${idAsignatura}/artefactosDTO/${idArtefacto}`, httpOptions); // Asegúrate de usar tu URL correcta
   }
 
   getRetoPorId(idAsignatura: number, idReto:number): Observable<Reto> {
 
     const token = sessionStorage.getItem('token'); // Recupera el token desde donde lo tengas almacenado
-    console.log(token);
+    
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type':  'application/json',
         'Authorization': `Bearer ${token}`
       })
     };
-    return this.http.get<Reto>(`${this.urlApi}/${idAsignatura}/retos/${idReto}`, httpOptions); // Asegúrate de usar tu URL correcta
+    return this.http.get<Reto>(`${this.urlApi}/${idAsignatura}/retosDTO/${idReto}`, httpOptions); // Asegúrate de usar tu URL correcta
   }
 
 
   getTemasPorAsignatura(idAsignatura: number): Observable<Tema[]> {
 
     const token = sessionStorage.getItem('token'); // Recupera el token desde donde lo tengas almacenado
-    console.log(token);
+    
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type':  'application/json',
@@ -129,49 +129,60 @@ export class AsignaturaService {
   getArtefactosPorAsignatura(idAsignatura: number): Observable<Artefacto[]> {
 
     const token = sessionStorage.getItem('token'); // Recupera el token desde donde lo tengas almacenado
-    console.log(token);
+    
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type':  'application/json',
         'Authorization': `Bearer ${token}`
       })
     };
-    return this.http.get<Artefacto[]>(`${this.urlApi}/${idAsignatura}/artefactos`, httpOptions); // Asegúrate de usar tu URL correcta
+    return this.http.get<Artefacto[]>(`${this.urlApi}/${idAsignatura}/artefactosDTO`, httpOptions); // Asegúrate de usar tu URL correcta
   }
 
 
   getLogrosPorAsignatura(idAsignatura: number): Observable<Logro[]> {
 
     const token = sessionStorage.getItem('token'); // Recupera el token desde donde lo tengas almacenado
-    console.log(token);
+    
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type':  'application/json',
         'Authorization': `Bearer ${token}`
       })
     };
-    return this.http.get<Logro[]>(`${this.urlApi}/${idAsignatura}/logros`, httpOptions); // Asegúrate de usar tu URL correcta
+    return this.http.get<Logro[]>(`${this.urlApi}/${idAsignatura}/logrosDTO`, httpOptions); // Asegúrate de usar tu URL correcta
   }
-
 
   getRetosPorAsignatura(idAsignatura: number): Observable<Reto[]> {
 
     const token = sessionStorage.getItem('token'); // Recupera el token desde donde lo tengas almacenado
-    console.log(token);
+    
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type':  'application/json',
         'Authorization': `Bearer ${token}`
       })
     };
-    return this.http.get<Reto[]>(`${this.urlApi}/${idAsignatura}/retos`, httpOptions); // Asegúrate de usar tu URL correcta
+    return this.http.get<Reto[]>(`${this.urlApi}/${idAsignatura}/retosDTO`, httpOptions); // Asegúrate de usar tu URL correcta
   }
-//BBBB222
+  getRetosPorAsignaturaUsuario(idAsignatura: number): Observable<Reto[]> {
+
+    const token = sessionStorage.getItem('token'); // Recupera el token desde donde lo tengas almacenado
+    
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type':  'application/json',
+        'Authorization': `Bearer ${token}`
+      })
+    };
+    return this.http.get<Reto[]>(`${this.urlApi}/${idAsignatura}/retosAlumno`, httpOptions); // Asegúrate de usar tu URL correcta
+  }
+
 
   aceptarAlumno(idAsignatura: number, idAlumno: number): Observable<any> {
 
     const token = sessionStorage.getItem('token'); // Recupera el token desde donde lo tengas almacenado
-    console.log(token);
+    
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type':  'application/json',
@@ -186,7 +197,7 @@ export class AsignaturaService {
   rechazarAlumno(idAsignatura: number, idAlumno: number): Observable<any> {
 
     const token = sessionStorage.getItem('token'); // Recupera el token desde donde lo tengas almacenado
-    console.log(token);
+    
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type':  'application/json',
@@ -200,7 +211,7 @@ export class AsignaturaService {
   enviarCodigo(codigo: string): Observable<any> {
 
     const token = sessionStorage.getItem('token'); // Recupera el token desde donde lo tengas almacenado
-    console.log(token);
+    
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type':  'application/json',
@@ -218,7 +229,7 @@ export class AsignaturaService {
   crearAsignatura(asignatura: Asignatura): Observable<Asignatura> {
 
     const token = sessionStorage.getItem('token'); // Recupera el token desde donde lo tengas almacenado
-    console.log(token);
+    
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type':  'application/json',
@@ -233,7 +244,7 @@ export class AsignaturaService {
   crearTema(tema: Tema, id:number): Observable<Tema> {
 
     const token = sessionStorage.getItem('token'); // Recupera el token desde donde lo tengas almacenado
-    console.log(token);
+    
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type':  'application/json',
@@ -263,7 +274,7 @@ export class AsignaturaService {
   crearLogro(logro: Logro, id:number): Observable<Logro> {
 
     const token = sessionStorage.getItem('token'); // Recupera el token desde donde lo tengas almacenado
-    console.log(token);
+    
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type':  'application/json',
@@ -277,7 +288,9 @@ export class AsignaturaService {
   crearReto(reto: Reto, id:number): Observable<Reto> {
 
     const token = sessionStorage.getItem('token'); // Recupera el token desde donde lo tengas almacenado
-    console.log(token);
+    
+    console.log("Este es el logro del reto septiembre", reto.logro);
+
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type':  'application/json',
@@ -291,7 +304,7 @@ export class AsignaturaService {
   actualizarAsignatura(asignatura: Asignatura): Observable<Asignatura> {
 
     const token = sessionStorage.getItem('token'); // Recupera el token desde donde lo tengas almacenado
-    console.log(token);
+    
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type':  'application/json',
@@ -308,7 +321,7 @@ export class AsignaturaService {
   actualizarTema(tema: Tema, idAsignatura:number): Observable<Tema> {
 
     const token = sessionStorage.getItem('token'); // Recupera el token desde donde lo tengas almacenado
-    console.log(token);
+    
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type':  'application/json',
@@ -323,7 +336,7 @@ export class AsignaturaService {
   actualizarLogro(logro: Logro, idAsignatura:number): Observable<Logro> {
 
     const token = sessionStorage.getItem('token'); // Recupera el token desde donde lo tengas almacenado
-    console.log(token);
+    
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type':  'application/json',
@@ -339,7 +352,7 @@ export class AsignaturaService {
   actualizarArtefacto(artefacto: Artefacto, idAsignatura:number): Observable<Artefacto> {
 
     const token = sessionStorage.getItem('token'); // Recupera el token desde donde lo tengas almacenado
-    console.log(token);
+    
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type':  'application/json',
@@ -355,7 +368,7 @@ export class AsignaturaService {
   actualizarReto(reto: Reto, idAsignatura:number): Observable<Reto> {
 
     const token = sessionStorage.getItem('token'); // Recupera el token desde donde lo tengas almacenado
-    console.log(token);
+    
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type':  'application/json',
@@ -371,7 +384,7 @@ export class AsignaturaService {
   borrarAsignatura(idAsignatura: number): Observable<any> {
 
     const token = sessionStorage.getItem('token'); // Recupera el token desde donde lo tengas almacenado
-    console.log(token);
+    
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type':  'application/json',
@@ -385,7 +398,7 @@ export class AsignaturaService {
   borrarTema(idAsignatura: number, idTema: number): Observable<any> {
 
     const token = sessionStorage.getItem('token'); // Recupera el token desde donde lo tengas almacenado
-    console.log(token);
+    
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type':  'application/json',
@@ -396,10 +409,24 @@ export class AsignaturaService {
     return this.http.delete(`${this.urlApi}/${idAsignatura}/temas/${idTema}`, httpOptions);
   }
 
+
+  borrarArtefacto(idAsignatura: number, idArtefacto: number): Observable<any> {
+
+    const token = sessionStorage.getItem('token'); // Recupera el token desde donde lo tengas almacenado
+    
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type':  'application/json',
+        'Authorization': `Bearer ${token}`
+      })
+    };
+
+    return this.http.delete(`${this.urlApi}/${idAsignatura}/artefactos/${idArtefacto}`, httpOptions);
+  }
   borrarReto(idAsignatura: number, idReto: number): Observable<any> {
 
     const token = sessionStorage.getItem('token'); // Recupera el token desde donde lo tengas almacenado
-    console.log(token);
+    
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type':  'application/json',
@@ -410,11 +437,25 @@ export class AsignaturaService {
     return this.http.delete(`${this.urlApi}/${idAsignatura}/retos/${idReto}`, httpOptions);
   }
 
+  unirseReto(idAsignatura: number, idReto: number): Observable<any> {
+
+    const token = sessionStorage.getItem('token'); // Recupera el token desde donde lo tengas almacenado
+    
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type':  'application/json',
+        'Authorization': `Bearer ${token}`
+      })
+    };
+
+    return this.http.post(`${this.urlApi}/${idAsignatura}/asignarseReto/${idReto}`, httpOptions);
+  }
+
 
   borrarLogro(idAsignatura: number, idLogro: number): Observable<any> {
 
     const token = sessionStorage.getItem('token'); // Recupera el token desde donde lo tengas almacenado
-    console.log(token);
+    
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type':  'application/json',

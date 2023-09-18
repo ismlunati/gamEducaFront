@@ -13,7 +13,8 @@
               <th>Temporal</th>
               <th>Fecha Inicio</th>
               <th>Fecha Fin</th>
-
+              <th *ngIf="esProfesor()">Eliminar</th>
+              
 
             </tr>
           </thead>
@@ -25,8 +26,11 @@
               <td>{{artefacto.costePuntos}}</td>
               <td>{{artefacto.estado}}</td>
               <td>{{artefacto.temporal}}</td>
-              <td>{{artefacto.fechaInicio}}</td>
-              <td>{{artefacto.fechaFin}}</td>
+              <td>{{artefacto.fechaInicio| date: 'dd/MM/yyyy' }}</td>
+              <td>{{artefacto.fechaFin| date: 'dd/MM/yyyy' }}</td>
+              <td *ngIf="esProfesor()">
+                <button class="btn btn-primary" (click)="borrarTema(artefacto.id); $event.stopPropagation()">Eliminar</button>
+              </td>
               
               <!-- etc., agrega más celdas si necesitas -->
             </tr>

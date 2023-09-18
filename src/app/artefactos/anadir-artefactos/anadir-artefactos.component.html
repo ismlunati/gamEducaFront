@@ -14,16 +14,25 @@
         </div>
         <div class="mb-3">
           <label for="coste" class="form-label">Coste del artefacto</label>
-          <input type="number" class="form-control" id="coste" formControlName="coste" placeholder="Introduce el coste">
+          <input type="number" class="form-control" id="coste" formControlName="costePuntos" placeholder="Introduce el coste">
         </div>
         <div class="mb-3">
           <label for="temporal" class="form-label">Repetible</label>
           <input type="checkbox" class="form-check-input" id="temporal" formControlName="repetible">
         </div>
-        <div class="mb-3">
+        <!-- <div class="mb-3">
           <label for="temporal" class="form-label">Temporal</label>
           <input type="checkbox" class="form-check-input" id="temporal" formControlName="temporal">
+        </div> -->
+        <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
+          <input type="radio" class="btn-check" name="temporal" id="btnradio1" autocomplete="off" value="true" formControlName="temporal">
+          <label class="btn btn-outline-primary" for="btnradio1">Temporal</label>
+        
+          <input type="radio" class="btn-check" name="temporal" id="btnradio2" autocomplete="off" value="false" formControlName="temporal">
+          <label class="btn btn-outline-primary" for="btnradio2">No temporal</label>
         </div>
+
+        
         <div class="mb-3">
           <label for="fechaInicio" class="form-label">Fecha Inicio</label>
           <input type="date" class="form-control" id="fechaInicio" formControlName="fechaInicio" placeholder="Introduce la fecha de inicio">
@@ -32,6 +41,12 @@
           <label for="fechaFin" class="form-label">Fecha Fin</label>
           <input type="date" class="form-control" id="fechaFin" formControlName="fechaFin" placeholder="Introduce la fecha de fin">
         </div>
+        <div class="mb-3">
+          <label class="form-label">Logros Requeridos:</label>
+          <div *ngFor="let item of artefacto?.artefactoLogros">
+              <p>{{ item.logro.nombre }}</p>
+          </div>
+      </div>
 
         <button type="submit" class="btn btn-primary" *ngIf="esProfesor()">
           <span *ngIf="idArtefacto!==0">Actualizar Asignatura</span>

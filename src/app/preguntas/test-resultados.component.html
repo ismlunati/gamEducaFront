@@ -1,0 +1,22 @@
+
+<div *ngIf="resultados">
+    <h2>Resultados del Test</h2>
+      <p><strong>Número de Preguntas Totales:</strong> {{resultados.numeroPreguntasTotales}}</p>
+      <p><strong>Número de Preguntas Acertadas:</strong> {{resultados.numeroPreguntasAcertadas}}</p>
+      <p><strong>Puntuación:</strong> {{resultados.puntuacion}}</p>
+  
+      <h3>Preguntas Respondidas</h3>
+      <ul>
+        <li *ngFor="let pregunta of resultados.preguntasRespondidas">
+          {{pregunta.texto}}  <!-- Ajusta este campo según cómo accedas al texto de la pregunta en tu objeto -->
+        </li>
+      </ul>
+  
+      <h3>Respuestas</h3>
+      <ul>
+        <li *ngFor="let respuesta of resultados.respuestas">
+          {{respuesta.textoRespuesta}}  <!-- Ajusta este campo según cómo accedas al texto de la respuesta en tu objeto -->
+        </li>
+      </ul>
+</div>
+  

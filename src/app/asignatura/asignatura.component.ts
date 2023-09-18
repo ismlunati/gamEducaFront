@@ -1,7 +1,5 @@
-import { AuthService } from 'src/app/usuario/auth.service';
-import { Usuario } from './../usuario/clases/Usuario.interface';
 import { Component, OnInit } from '@angular/core';
-import { UsuarioService } from '../usuario/usuario.service';
+import { AuthService } from 'src/app/usuario/auth.service';
 
 @Component({
   selector: 'app-asignatura',

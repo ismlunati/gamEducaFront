@@ -1,15 +1,13 @@
-import { Artefacto } from "./Artefacto";
+import { ArtefactoLogro } from "./ArtefactoLogro";
 import { Reto } from "./Reto";
 
 export interface Logro {
     id:number;
     nombre:string;
     descripcion:string;
-    beneficio:number;
-    estado:boolean;
+    imagen?:string;
     retos:Reto[];
-    artefacto:Artefacto;
-    artefactosDesbloqueados:Artefacto[];
+    artefactoLogros:ArtefactoLogro
 
 
 }
