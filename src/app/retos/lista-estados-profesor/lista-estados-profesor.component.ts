@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AsignaturaService } from 'src/app/asignatura/asignatura.service';
 import { AlumnoRetoDTO } from 'src/app/clasesGeneral/AlumnoRetoDTO';
@@ -8,17 +8,28 @@ import { AuthService } from 'src/app/usuario/auth.service';
 import Swal from 'sweetalert2';
 
 @Component({
-  selector: 'app-listado-retos',
-  templateUrl: './listado-retos.component.html'
+  selector: 'app-lista-estados-profesor',
+  templateUrl: './lista-estados-profesor.component.html'
 })
-export class ListadoRetosComponent implements OnInit {
+export class ListaEstadosProfesorComponent implements OnInit {
+
+  
+  @Input() retosAsignados?: AlumnoRetoDTO[];
+
+  @Input() estadoSeleccionado?: EstadoReto;
+
+
+  public tablaData: any[] = [];
+
+
+
+
 
   id!: number;
   retos: Reto[] = [];
-  retosUsuario: AlumnoRetoDTO[] = [];
+  retosUsuario: Reto[] = [];
 
   retosFiltrados: Reto[] = [];
-  estadoSeleccionado: EstadoReto= EstadoReto.COMPLETADO;
 
   listas: string[] = ['Lista retos', 'Retos inscritos'];  // Opciones para el select
   listaSeleccionada: string = 'Lista retos';
@@ -34,49 +45,29 @@ export class ListadoRetosComponent implements OnInit {
     
     this.id= +this.route.snapshot.parent?.paramMap.get('id')!;
 
- 
 
-    this.asignaturaService.getRetosPorAsignatura(this.id).subscribe(retos => {
-      this.retos = retos;
-      this.retosFiltrados= retos;
-      console.log("Retos",this.retos);
-      //console.log("Estoy imprimiendo el valor de alumno", this.alumno);
+    this.retosAsignados!.forEach((alumnoReto) => {
+      const alumno = alumnoReto.alumno;
+      alumnoReto.retoConEstado.forEach((retoConEstado) => {
+        const reto = retoConEstado.reto;
+        const estado = retoConEstado.estado;
+        this.tablaData.push({
+          alumno: alumno, // Suponiendo que el alumno tiene un campo nombre
+          ...reto, // Suponiendo que reto es un objeto con varios campos
+          estado // Suponiendo que quieres mostrar el estado también
+        });
+      });
     });
 
 
-    this.asignaturaService.getRetosPorAsignaturaUsuario(this.id).subscribe(retos => {
-      this.retosUsuario = retos;
-      console.log("Retos",this.retosUsuario);
-      //console.log("Estoy imprimiendo el valor de alumno", this.alumno);
-    });
-    console.log("Estoy probando si imprime retos despeus de SUBSCRIBE",this.retosUsuario )
-
+    console.log("Retos asignador", this.retosAsignados)
+    console.log("Retos tabla",this.tablaData)
   }
-
-  // onSelectChange() {
-  //   if (this.listaSeleccionada === 'Lista retos') {
-  //     this.retosFiltrados= this.retos;
-  //   } else {
-  //     this.retosFiltrados= this.retosUsuario;
-  //   }
-  // }
-
-
-
-  filtrarPorEstado(): void {
-    
-    this.retosUsuario = this.retosUsuario.filter(retoConEstado => 
-      retoConEstado.retoConEstado.filter(reto => reto.estado === this.estadoSeleccionado));
-  
-
-
-}
 
 
   navegar(id: number) {
     this.router.navigate(['/asignaturas', this.id,'retos',id,'editar']);
   }
-
 
 
   borrarReto(idReto: number): void {
@@ -92,6 +83,31 @@ export class ListadoRetosComponent implements OnInit {
     );
   }
 
+  aceptarReto(idReto: number): void {
+    this.asignaturaService.aceptarReto(idReto, this.id).subscribe(
+      res => {
+        console.log('reto aceptado');
+        //this.retos = this.retos.filter(reto => reto.id !== idReto);
+        // Actualiza tu vista o haz algo tras la eliminación de la asignatura
+      },
+      err => {
+        console.error('Error aceptando reto', err);
+      }
+    );
+  }
+
+  rechazarReto(idReto: number): void {
+    this.asignaturaService.rechazarReto(idReto, this.id).subscribe(
+      res => {
+        console.log('reto rechazado');
+        //this.retos = this.retos.filter(reto => reto.id !== idReto);
+        // Actualiza tu vista o haz algo tras la eliminación de la asignatura
+      },
+      err => {
+        console.error('Error rechazando reto', err);
+      }
+    );
+  }
 
   unirseReto(idReto: number, nombreReto:String): void {
     this.asignaturaService.unirseReto( this.id, idReto).subscribe(

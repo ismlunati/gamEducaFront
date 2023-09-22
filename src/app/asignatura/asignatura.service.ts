@@ -7,6 +7,7 @@ import { Tema } from '../clasesGeneral/Tema';
 import { Logro } from '../clasesGeneral/Logro';
 import { Reto } from '../clasesGeneral/Reto';
 import { Artefacto } from '../clasesGeneral/Artefacto';
+import { AlumnoRetoDTO } from '../clasesGeneral/AlumnoRetoDTO';
 
 @Injectable({
   providedIn: 'root'
@@ -165,7 +166,7 @@ export class AsignaturaService {
     };
     return this.http.get<Reto[]>(`${this.urlApi}/${idAsignatura}/retosDTO`, httpOptions); // Asegúrate de usar tu URL correcta
   }
-  getRetosPorAsignaturaUsuario(idAsignatura: number): Observable<Reto[]> {
+  getRetosPorAsignaturaUsuario(idAsignatura: number): Observable<AlumnoRetoDTO[]> {
 
     const token = sessionStorage.getItem('token'); // Recupera el token desde donde lo tengas almacenado
     
@@ -175,7 +176,7 @@ export class AsignaturaService {
         'Authorization': `Bearer ${token}`
       })
     };
-    return this.http.get<Reto[]>(`${this.urlApi}/${idAsignatura}/retosAlumno`, httpOptions); // Asegúrate de usar tu URL correcta
+    return this.http.get<AlumnoRetoDTO[]>(`${this.urlApi}/${idAsignatura}/retosDeAsignaturaPorAlumno`, httpOptions); // Asegúrate de usar tu URL correcta
   }
 
 
@@ -369,6 +370,7 @@ export class AsignaturaService {
 
     const token = sessionStorage.getItem('token'); // Recupera el token desde donde lo tengas almacenado
     
+    console.log("valor", reto);
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type':  'application/json',
@@ -437,7 +439,7 @@ export class AsignaturaService {
     return this.http.delete(`${this.urlApi}/${idAsignatura}/retos/${idReto}`, httpOptions);
   }
 
-  unirseReto(idAsignatura: number, idReto: number): Observable<any> {
+  aceptarReto(idAsignatura: number, idReto: number): Observable<any> {
 
     const token = sessionStorage.getItem('token'); // Recupera el token desde donde lo tengas almacenado
     
@@ -448,9 +450,53 @@ export class AsignaturaService {
       })
     };
 
+    return this.http.post(`${this.urlApi}/${idAsignatura}/retoAceptar/${idReto}`, httpOptions);
+  }
+
+  rechazarReto(idAsignatura: number, idReto: number): Observable<any> {
+
+    const token = sessionStorage.getItem('token'); // Recupera el token desde donde lo tengas almacenado
+    
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type':  'application/json',
+        'Authorization': `Bearer ${token}`
+      })
+    };
+
+    return this.http.post(`${this.urlApi}/${idAsignatura}/retoRechazar/${idReto}`, httpOptions);
+  }
+  
+
+
+  unirseReto(idAsignatura: number, idReto: number): Observable<any> {
+
+    const token = sessionStorage.getItem('token'); // Recupera el token desde donde lo tengas almacenado
+    
+    console.log(idAsignatura,"asd", idReto)
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type':  'application/json',
+        'Authorization': `Bearer ${token}`
+      })
+    };
+    console.log(`${this.urlApi}/${idAsignatura}/asignarseReto/${idReto}`);
     return this.http.post(`${this.urlApi}/${idAsignatura}/asignarseReto/${idReto}`, httpOptions);
   }
 
+
+  finalizarReto(idAsignatura: number, idAlumnoReto: number): Observable<any> {
+
+    const token = sessionStorage.getItem('token'); // Recupera el token desde donde lo tengas almacenado
+    
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type':  'application/json',
+        'Authorization': `Bearer ${token}`
+      })
+    };
+    return this.http.post(`${this.urlApi}/${idAsignatura}/finalizarReto/${idAlumnoReto}`, httpOptions);
+  }
 
   borrarLogro(idAsignatura: number, idLogro: number): Observable<any> {
 

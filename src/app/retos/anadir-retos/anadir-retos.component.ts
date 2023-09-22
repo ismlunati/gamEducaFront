@@ -6,6 +6,8 @@ import { ActivatedRoute } from '@angular/router';
 import { Reto } from 'src/app/clasesGeneral/Reto';
 import { Asignatura } from 'src/app/asignatura/asignatura';
 import { Logro } from 'src/app/clasesGeneral/Logro';
+import moment from 'moment';
+import { forkJoin } from 'rxjs';
 
 @Component({
   selector: 'app-anadir-retos',
@@ -59,24 +61,76 @@ export class AnadirRetosComponent implements OnInit {
 
     console.log("Este es el id del reto", this.idReto);
 
+    // this.asignaturaService.getLogrosPorAsignatura(this.idAsignatura).subscribe(logros => {
+    //   this.logrosAsignatura = logros;
+    //   console.log("Estos son los logros disponibles", logros);
+    //   console.log("logro de prueba:", logros[0]);
+
+    // });
+
     if (this.idReto !== 0) {
       // Aquí va la lógica si existe id
       console.log(`El id es ${this.idAsignatura}`);
 
-      this.asignaturaService.getRetoPorId(this.idAsignatura, this.idReto).subscribe(reto => {
+
+
+
+      forkJoin({
+        reto: this.asignaturaService.getRetoPorId(this.idAsignatura, this.idReto),
+        logros: this.asignaturaService.getLogrosPorAsignatura(this.idAsignatura)
+      }).subscribe(({ reto, logros }) => {
         this.reto = reto;
-
-
+        this.logrosAsignatura = logros;
+    
         console.log("ESTE ES EL RETO", reto);
-        console.log(this.idAsignatura);
-
+        console.log(this.logrosAsignatura);
+        console.log(moment(this.reto.fechaInicio).format('YYYY-MM-DD'))
         this.retoForm.patchValue({
           nombre: this.reto.nombre,
-          descripcion: this.reto.descripcion
+          descripcion: this.reto.descripcion,
+          puntosOtorgados: this.reto.puntosOtorgados,
+          temporal: this.reto.temporal,
+          automatico: this.reto.automatico,
+          logro: this.logrosAsignatura.find(l => l.id === this.reto.logro.id),
+          fechaInicio:  this.reto.temporal? moment(this.reto.fechaInicio).format('YYYY-MM-DD') :'',
+          fechaFin: this.reto.temporal? moment(this.reto.fechaFin).format('YYYY-MM-DD'):'' 
         });
       });
 
 
+
+
+
+
+
+
+
+
+
+
+
+      // this.asignaturaService.getRetoPorId(this.idAsignatura, this.idReto).subscribe(reto => {
+      //   this.reto = reto;
+
+
+      //   console.log("ESTE ES EL RETO", reto);
+      //   console.log(this.logrosAsignatura);
+      //   console.log(moment(this.reto.fechaInicio).format('YYYY-MM-DD'))
+      //   this.retoForm.patchValue({
+      //     nombre: this.reto.nombre,
+      //     descripcion: this.reto.descripcion,
+      //     puntosOtorgados: this.reto.puntosOtorgados,
+      //     temporal: this.reto.temporal,
+      //     automatico: this.reto.automatico,
+      //     logro: this.logrosAsignatura.find(l => l.id === this.reto.logro.id),
+      //     fechaInicio:  this.reto.temporal? moment(this.reto.fechaInicio).format('YYYY-MM-DD') :'',
+      //     fechaFin: this.reto.temporal? moment(this.reto.fechaFin).format('YYYY-MM-DD'):'' 
+      //   });
+
+        
+      // });
+
+      console.log("fecha prueba",this.reto)
 
 
     } else {
@@ -84,12 +138,6 @@ export class AnadirRetosComponent implements OnInit {
       console.log('Es operacion /save');
     }
 
-    this.asignaturaService.getLogrosPorAsignatura(this.idAsignatura).subscribe(logros => {
-      this.logrosAsignatura = logros;
-      console.log("Estos son los logros disponibles", logros);
-      console.log("logro de prueba:", logros[0]);
-
-    });
 
 
 
@@ -103,11 +151,12 @@ export class AnadirRetosComponent implements OnInit {
       }
     });
 
+
   }
 
   metodoActualizarCrear(): void {
     if (this.idReto !== 0) {
-      console.log("actualizar")
+      console.log("actualizar", this.retoForm.value)
       this.actualizarReto();
 
     } else {

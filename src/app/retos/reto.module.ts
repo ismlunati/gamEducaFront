@@ -5,6 +5,8 @@ import { RouterModule } from '@angular/router';
 import { RetosComponent } from './retos.component';
 import { ListadoRetosComponent } from './listado-retos/listado-retos.component';
 import { AnadirRetosComponent } from './anadir-retos/anadir-retos.component';
+import { ListaEstadosComponent } from './lista-estados/lista-estados.component';
+import { ListaEstadosProfesorComponent } from './lista-estados-profesor/lista-estados-profesor.component';
 
 
 
@@ -14,7 +16,9 @@ import { AnadirRetosComponent } from './anadir-retos/anadir-retos.component';
   declarations: [
     RetosComponent,
     ListadoRetosComponent,
-    AnadirRetosComponent
+    AnadirRetosComponent,
+    ListaEstadosComponent,
+    ListaEstadosProfesorComponent
 
   ],
   exports:[
