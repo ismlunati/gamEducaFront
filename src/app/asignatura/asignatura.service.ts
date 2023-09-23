@@ -8,6 +8,7 @@ import { Logro } from '../clasesGeneral/Logro';
 import { Reto } from '../clasesGeneral/Reto';
 import { Artefacto } from '../clasesGeneral/Artefacto';
 import { AlumnoRetoDTO } from '../clasesGeneral/AlumnoRetoDTO';
+import { ArtefactoCompraDTO } from '../clasesGeneral/ArtefactoCompraDTO';
 
 @Injectable({
   providedIn: 'root'
@@ -139,7 +140,18 @@ export class AsignaturaService {
     };
     return this.http.get<Artefacto[]>(`${this.urlApi}/${idAsignatura}/artefactosDTO`, httpOptions); // Asegúrate de usar tu URL correcta
   }
+  getArtefactosPorAlumno(idAsignatura: number): Observable<ArtefactoCompraDTO[]> {
 
+    const token = sessionStorage.getItem('token'); // Recupera el token desde donde lo tengas almacenado
+    
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type':  'application/json',
+        'Authorization': `Bearer ${token}`
+      })
+    };
+    return this.http.get<ArtefactoCompraDTO[]>(`${this.urlApi}/${idAsignatura}/artefactosAlumno`, httpOptions); // Asegúrate de usar tu URL correcta
+  }
 
   getLogrosPorAsignatura(idAsignatura: number): Observable<Logro[]> {
 
@@ -425,6 +437,21 @@ export class AsignaturaService {
 
     return this.http.delete(`${this.urlApi}/${idAsignatura}/artefactos/${idArtefacto}`, httpOptions);
   }
+
+  comprarArtefacto(idAsignatura: number, idArtefacto: number): Observable<any> {
+
+    const token = sessionStorage.getItem('token'); // Recupera el token desde donde lo tengas almacenado
+    
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type':  'application/json',
+        'Authorization': `Bearer ${token}`
+      })
+    };
+
+    return this.http.post(`${this.urlApi}/${idAsignatura}/compras/${idArtefacto}`, httpOptions);
+  }
+
   borrarReto(idAsignatura: number, idReto: number): Observable<any> {
 
     const token = sessionStorage.getItem('token'); // Recupera el token desde donde lo tengas almacenado
@@ -439,7 +466,7 @@ export class AsignaturaService {
     return this.http.delete(`${this.urlApi}/${idAsignatura}/retos/${idReto}`, httpOptions);
   }
 
-  aceptarReto(idAsignatura: number, idReto: number): Observable<any> {
+  aceptarReto(idAsignatura: number, idAlumnoReto: number): Observable<any> {
 
     const token = sessionStorage.getItem('token'); // Recupera el token desde donde lo tengas almacenado
     
@@ -450,10 +477,10 @@ export class AsignaturaService {
       })
     };
 
-    return this.http.post(`${this.urlApi}/${idAsignatura}/retoAceptar/${idReto}`, httpOptions);
+    return this.http.post(`${this.urlApi}/${idAsignatura}/retoAceptar/${idAlumnoReto}`, httpOptions);
   }
 
-  rechazarReto(idAsignatura: number, idReto: number): Observable<any> {
+  rechazarReto(idAsignatura: number, idAlumnoReto: number): Observable<any> {
 
     const token = sessionStorage.getItem('token'); // Recupera el token desde donde lo tengas almacenado
     
@@ -464,7 +491,7 @@ export class AsignaturaService {
       })
     };
 
-    return this.http.post(`${this.urlApi}/${idAsignatura}/retoRechazar/${idReto}`, httpOptions);
+    return this.http.post(`${this.urlApi}/${idAsignatura}/retoRechazar/${idAlumnoReto}`, httpOptions);
   }
   
 
@@ -485,7 +512,7 @@ export class AsignaturaService {
   }
 
 
-  finalizarReto(idAsignatura: number, idAlumnoReto: number): Observable<any> {
+  finalizarReto(idAsignatura: number, idReto: number): Observable<any> {
 
     const token = sessionStorage.getItem('token'); // Recupera el token desde donde lo tengas almacenado
     
@@ -495,7 +522,7 @@ export class AsignaturaService {
         'Authorization': `Bearer ${token}`
       })
     };
-    return this.http.post(`${this.urlApi}/${idAsignatura}/finalizarReto/${idAlumnoReto}`, httpOptions);
+    return this.http.post(`${this.urlApi}/${idAsignatura}/finalizarReto/${idReto}`, httpOptions);
   }
 
   borrarLogro(idAsignatura: number, idLogro: number): Observable<any> {

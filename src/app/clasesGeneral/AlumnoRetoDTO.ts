@@ -6,6 +6,7 @@ export interface AlumnoRetoDTO {
 
     alumno:Alumno;
     retoConEstado:RetoConEstadoDTO[];
+    
 
 
 

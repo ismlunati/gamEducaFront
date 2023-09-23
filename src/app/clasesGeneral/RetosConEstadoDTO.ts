@@ -5,6 +5,7 @@ export interface RetoConEstadoDTO {
 
     estado:EstadoReto;
     reto:Reto;
+    idAlumnoReto:number;
 
 
 

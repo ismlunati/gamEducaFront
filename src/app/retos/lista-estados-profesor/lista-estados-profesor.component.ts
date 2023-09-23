@@ -51,8 +51,10 @@ export class ListaEstadosProfesorComponent implements OnInit {
       alumnoReto.retoConEstado.forEach((retoConEstado) => {
         const reto = retoConEstado.reto;
         const estado = retoConEstado.estado;
+        const idAlumnoReto= retoConEstado.idAlumnoReto;
         this.tablaData.push({
-          alumno: alumno, // Suponiendo que el alumno tiene un campo nombre
+          alumno: alumno,// Suponiendo que el alumno tiene un campo nombre
+          idAlumnoReto:idAlumnoReto,
           ...reto, // Suponiendo que reto es un objeto con varios campos
           estado // Suponiendo que quieres mostrar el estado también
         });
@@ -83,8 +85,8 @@ export class ListaEstadosProfesorComponent implements OnInit {
     );
   }
 
-  aceptarReto(idReto: number): void {
-    this.asignaturaService.aceptarReto(idReto, this.id).subscribe(
+  aceptarReto(idAlumnoReto: number): void {
+    this.asignaturaService.aceptarReto(this.id, idAlumnoReto).subscribe(
       res => {
         console.log('reto aceptado');
         //this.retos = this.retos.filter(reto => reto.id !== idReto);
@@ -96,8 +98,8 @@ export class ListaEstadosProfesorComponent implements OnInit {
     );
   }
 
-  rechazarReto(idReto: number): void {
-    this.asignaturaService.rechazarReto(idReto, this.id).subscribe(
+  rechazarReto(idAlumnoReto: number): void {
+    this.asignaturaService.rechazarReto(this.id, idAlumnoReto).subscribe(
       res => {
         console.log('reto rechazado');
         //this.retos = this.retos.filter(reto => reto.id !== idReto);
@@ -109,19 +111,6 @@ export class ListaEstadosProfesorComponent implements OnInit {
     );
   }
 
-  unirseReto(idReto: number, nombreReto:String): void {
-    this.asignaturaService.unirseReto( this.id, idReto).subscribe(
-      res => {
-        console.log('Unido a reto exitosamente');
-        Swal.fire('Inscripcion',`Se ha realizado la inscripción al reto ${nombreReto} con exito`,'success');
-        // Actualiza tu vista o haz algo tras la eliminación de la asignatura
-      },
-      err => {
-        Swal.fire('Inscripcion',`No se ha podido realizar la inscripción al reto "${nombreReto}" con exito`,'error');
-        console.error('Error uniendose a reto', err);
-      }
-    );
-  }
 
 
   esProfesor():boolean{
