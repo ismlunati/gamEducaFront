@@ -1,5 +1,5 @@
 import { DatePipe } from '@angular/common';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AsignaturaService } from 'src/app/asignatura/asignatura.service';
 import { AlumnoRetoDTO } from 'src/app/clasesGeneral/AlumnoRetoDTO';
@@ -7,6 +7,7 @@ import { Artefacto } from 'src/app/clasesGeneral/Artefacto';
 import { ArtefactoCompraDTO } from 'src/app/clasesGeneral/ArtefactoCompraDTO';
 import { EstadoCompra } from 'src/app/clasesGeneral/EstadoCompra';
 import { AuthService } from 'src/app/usuario/auth.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-listado-artefactos-alumnos',
@@ -17,25 +18,17 @@ export class ListadoArtefactosAlumnosComponent implements OnInit {
 
 
 
-
-
-
-
-
+  @Output() recargarDatosLista: EventEmitter<string> = new EventEmitter<string>();
 
   @Input() artefactoCompras?: ArtefactoCompraDTO[];
 
+  @Input() estadoSeleccionado!:EstadoCompra;
+
   id!: number;
-  artefactos: Artefacto[] = [];
-  artefactosFiltrados: Artefacto[] = [];
-  artefactosAlumno: ArtefactoCompraDTO[] = [];
-
-
-  estadoSeleccionado:EstadoCompra= EstadoCompra.COMPRADO;
 
 
 
-
+  
   constructor(private route: ActivatedRoute, private asignaturaService: AsignaturaService,
     private authService:AuthService, private router:Router) { }
 
@@ -44,7 +37,7 @@ export class ListadoArtefactosAlumnosComponent implements OnInit {
     
     this.id= +this.route.snapshot.parent?.paramMap.get('id')!;
 
-
+    
 
   }
 
@@ -54,11 +47,30 @@ export class ListadoArtefactosAlumnosComponent implements OnInit {
 
 
   canjearArtefacto(idArtefacto: number): void {
-    this.asignaturaService.borrarArtefacto( this.id,idArtefacto).subscribe(
+    this.asignaturaService.canjearArtefacto( this.id,idArtefacto).subscribe(
       res => {
-        console.log('Asignatura borrada exitosamente');
-        this.artefactos = this.artefactos.filter(tema => tema.id !== idArtefacto);
+        Swal.fire('Canjeo',`Se ha canjeado el artefacto ${idArtefacto} con exito`,'success');
+
+        console.log('Artefacto canjeado exitosamente');
         // Actualiza tu vista o haz algo tras la eliminación de la asignatura
+        this.recargarDatosLista.emit('Actualizando lista de artefactos');
+      },
+      err => {
+        console.error('Error canjeando el artefacto', err);
+      }
+    );
+
+  }
+
+
+  aceptarCanjeo(idCompra: number): void {
+    this.asignaturaService.aceptarCanjeo( this.id,idCompra).subscribe(
+      res => {
+        Swal.fire('Canjeo aceptado',`Se ha aceptado el canjeo ${idCompra} con exito`,'success');
+
+        console.log('Asignatura borrada exitosamente');
+        // Actualiza tu vista o haz algo tras la eliminación de la asignatura
+        this.recargarDatosLista.emit('Actualizando lista de artefactos');
       },
       err => {
         console.error('Error borrando la asignatura', err);
@@ -66,25 +78,13 @@ export class ListadoArtefactosAlumnosComponent implements OnInit {
     );
   }
 
-
-  aceptarCanjeo(idArtefacto: number): void {
-    this.asignaturaService.borrarArtefacto( this.id,idArtefacto).subscribe(
+  denegarCanjeo(idCompra: number): void {
+    this.asignaturaService.denegarCanjeo( this.id,idCompra).subscribe(
       res => {
-        console.log('Asignatura borrada exitosamente');
-        this.artefactos = this.artefactos.filter(tema => tema.id !== idArtefacto);
-        // Actualiza tu vista o haz algo tras la eliminación de la asignatura
-      },
-      err => {
-        console.error('Error borrando la asignatura', err);
-      }
-    );
-  }
+        Swal.fire('Canjeo rechazado',`Se ha rechazado el canjeo ${idCompra} con exito`,'success');
 
-  denegarCanjeo(idArtefacto: number): void {
-    this.asignaturaService.borrarArtefacto( this.id,idArtefacto).subscribe(
-      res => {
         console.log('Asignatura borrada exitosamente');
-        this.artefactos = this.artefactos.filter(tema => tema.id !== idArtefacto);
+        this.recargarDatosLista.emit('Actualizando lista de artefactos');
         // Actualiza tu vista o haz algo tras la eliminación de la asignatura
       },
       err => {

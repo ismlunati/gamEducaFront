@@ -1,20 +1,20 @@
 <p>listado-artefactos works!</p>
 <div class="container mt-4">
 
-  <select [(ngModel)]="estadoSeleccionado" *ngIf="listaSeleccionada !=='Tienda'">
-    <option *ngFor="let estado of estados" [value]="estado">{{estado}}</option>
+  <select [(ngModel)]="estadoSeleccionado" *ngIf="listaSeleccionada !=='Tienda'" (change)="filtrarPorEstado()">
+    <option *ngFor="let estado of estados" [value]="estado">{{getEstadoValor(estado)}}</option>
   </select>
   
-  <button (click)="filtrarPorEstado()"  *ngIf="listaSeleccionada !=='Tienda'">Filtrar</button>
 
-  <select [(ngModel)]="listaSeleccionada">
+
+  <select [(ngModel)]="listaSeleccionada" (change)="filtrarPorEstado()">
     <option *ngFor="let lista of listas" [value]="lista">{{lista}}</option>
   </select>
 
 
     <div class="row">
       <div class="col">
-        <table class="table table-striped" *ngIf="listaSeleccionada ==='Tienda'"> 
+        <table class="table table-striped" *ngIf="listaSeleccionada ==='Tienda' && artefactos.length>0"> 
           <thead>
             <tr>
               
@@ -45,7 +45,7 @@
               </td>
 
               <td *ngIf="!esProfesor()">
-                <button class="btn btn-primary" (click)="comprarArtefacto(artefacto.id); $event.stopPropagation()">Eliminar</button>
+                <button class="btn btn-primary" (click)="comprarArtefacto(artefacto.id); $event.stopPropagation()">Comprar</button>
               </td>
 
               
@@ -53,9 +53,19 @@
             </tr>
           </tbody>
         </table>
+        <div *ngIf="artefactos.length === 0"
+        class="alert alert-info text-center d-flex flex-column justify-content-center align-items-center" role="alert"
+        style="height: 200px;">
+        <div>
+          <h4 class="alert-heading">Información</h4>
+          <p>No hay registros disponibles.</p>
+        </div>
+      </div>
         <app-listado-artefactos-alumnos
-        [artefactoCompras]="artefactosAlumno"
-        
+        [artefactoCompras]="artefactosAlumnoFiltrado"
+        [estadoSeleccionado]="estadoSeleccionado"
+        (recargarDatosLista)="recargarListaArtefactosAlumnos($event)"
+        *ngIf="listaSeleccionada !=='Tienda'"
         ></app-listado-artefactos-alumnos>
         <div class="mt-3">
             <button class="btn btn-primary" [routerLink]="['/asignaturas', id]">Volver</button>

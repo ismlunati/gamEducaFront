@@ -1,7 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ReactiveFormsModule } from '@angular/forms';
-// En tu componente
 import { TestService } from './test.service';
 import { Pregunta } from './pregunta.model';
 
@@ -12,6 +10,8 @@ import { Pregunta } from './pregunta.model';
   templateUrl: './test.component.html'
 })
 export class TestComponent implements OnInit {
+
+
   testForm!: FormGroup;
   elegiblePreguntas: any[] = [];
   selectedPreguntas: Pregunta[] = [];
@@ -22,6 +22,7 @@ export class TestComponent implements OnInit {
 constructor(private fb: FormBuilder, private testService: TestService) { }
   ngOnInit(): void {
     console.log("Test.Component: ngOnInit");
+
     this.testForm = this.fb.group({
       nombre: ['', Validators.required],
       descripcion: [''],
@@ -32,6 +33,7 @@ constructor(private fb: FormBuilder, private testService: TestService) { }
       fechaInicio: [''],
       fechaFin: ['']
     });
+    
     this.testForm.get('numeroPreguntas')?.valueChanges.subscribe(value => {
       this.numeroPreguntas = value;
     });

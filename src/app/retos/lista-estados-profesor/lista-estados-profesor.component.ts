@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, SimpleChanges } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AsignaturaService } from 'src/app/asignatura/asignatura.service';
 import { AlumnoRetoDTO } from 'src/app/clasesGeneral/AlumnoRetoDTO';
@@ -13,11 +13,13 @@ import Swal from 'sweetalert2';
 })
 export class ListaEstadosProfesorComponent implements OnInit {
 
-  
+
   @Input() retosAsignados?: AlumnoRetoDTO[];
 
   @Input() estadoSeleccionado?: EstadoReto;
 
+
+  @Output() recargarRetos = new EventEmitter<String>();
 
   public tablaData: any[] = [];
 
@@ -34,65 +36,94 @@ export class ListaEstadosProfesorComponent implements OnInit {
   listas: string[] = ['Lista retos', 'Retos inscritos'];  // Opciones para el select
   listaSeleccionada: string = 'Lista retos';
 
-  public estados = Object.values(EstadoReto);
+  public estados = Object.keys(EstadoReto);
 
 
   constructor(private route: ActivatedRoute, private asignaturaService: AsignaturaService,
-    private authService:AuthService, private router:Router) { }
+    private authService: AuthService, private router: Router) { }
 
   ngOnInit(): void {
     console.log("prueba", this.route.snapshot.parent?.paramMap.get('id'))
-    
-    this.id= +this.route.snapshot.parent?.paramMap.get('id')!;
 
+    this.id = +this.route.snapshot.parent?.paramMap.get('id')!;
+
+    this.actualizarListaRetosFiltrado();
+
+
+    console.log("Retos asignador", this.retosAsignados)
+    console.log("Retos tabla", this.tablaData)
+  }
+
+
+  ngOnChanges(changes: SimpleChanges): void {
+    console.log("EntrangChanges")
+    console.log("Retos cambio estado", this.retosAsignados);
+    // Verifica si retosUsuarioFiltrado ha cambiado
+    if (changes.retosAsignados) {
+      console.log("EntrangChangesy actua")
+      this.actualizarListaRetosFiltrado();
+      console.log("tablaPush", this.tablaData );
+    }
+  }
+
+
+
+  actualizarListaRetosFiltrado() {
+    this.tablaData = [];
 
     this.retosAsignados!.forEach((alumnoReto) => {
       const alumno = alumnoReto.alumno;
       alumnoReto.retoConEstado.forEach((retoConEstado) => {
         const reto = retoConEstado.reto;
         const estado = retoConEstado.estado;
-        const idAlumnoReto= retoConEstado.idAlumnoReto;
+        const idAlumnoReto = retoConEstado.idAlumnoReto;
         this.tablaData.push({
           alumno: alumno,// Suponiendo que el alumno tiene un campo nombre
-          idAlumnoReto:idAlumnoReto,
+          idAlumnoReto: idAlumnoReto,
           ...reto, // Suponiendo que reto es un objeto con varios campos
           estado // Suponiendo que quieres mostrar el estado también
         });
       });
     });
-
-
-    console.log("Retos asignador", this.retosAsignados)
-    console.log("Retos tabla",this.tablaData)
   }
 
 
   navegar(id: number) {
-    this.router.navigate(['/asignaturas', this.id,'retos',id,'editar']);
+    this.router.navigate(['/asignaturas', this.id, 'retos', id, 'editar']);
   }
 
 
-  borrarReto(idReto: number): void {
-    this.asignaturaService.borrarReto(idReto, this.id).subscribe(
+  cambiarDecision(idAlumnoReto: number): void {
+    this.asignaturaService.cambiarDecisionReto( this.id, idAlumnoReto).subscribe(
       res => {
-        console.log('Asignatura borrada exitosamente');
-        this.retos = this.retos.filter(reto => reto.id !== idReto);
+        Swal.fire('Cambio de Decision', `Se ha realizado lel cambio de decision del reto ${idAlumnoReto} con exito`, 'success');
+
+        console.log('Decision del reto cambiada exitosamente');
+     
+
+        this.recargarRetos.emit();
         // Actualiza tu vista o haz algo tras la eliminación de la asignatura
       },
       err => {
+        Swal.fire('Cambio de Decision', `Se ha realizado lel cambio de decision del reto ${idAlumnoReto} con exito`, 'error');
+
         console.error('Error borrando la asignatura', err);
       }
-    );
+      
+      );
   }
 
   aceptarReto(idAlumnoReto: number): void {
     this.asignaturaService.aceptarReto(this.id, idAlumnoReto).subscribe(
       res => {
+        Swal.fire('Reto aceptado', `Se ha aceptado el reto ${idAlumnoReto} con exito`, 'success');
         console.log('reto aceptado');
         //this.retos = this.retos.filter(reto => reto.id !== idReto);
         // Actualiza tu vista o haz algo tras la eliminación de la asignatura
       },
       err => {
+        Swal.fire('Reto aceptado', `Error aceptando el reto ${idAlumnoReto}`, 'error');
+
         console.error('Error aceptando reto', err);
       }
     );
@@ -101,11 +132,15 @@ export class ListaEstadosProfesorComponent implements OnInit {
   rechazarReto(idAlumnoReto: number): void {
     this.asignaturaService.rechazarReto(this.id, idAlumnoReto).subscribe(
       res => {
+        Swal.fire('Reto rechazado', `Se ha rechazado el reto ${idAlumnoReto} con exito`, 'success');
+
         console.log('reto rechazado');
         //this.retos = this.retos.filter(reto => reto.id !== idReto);
         // Actualiza tu vista o haz algo tras la eliminación de la asignatura
       },
       err => {
+        Swal.fire('Reto rechazado', `Error rechazando el reto ${idAlumnoReto}`, 'error');
+
         console.error('Error rechazando reto', err);
       }
     );
@@ -113,9 +148,9 @@ export class ListaEstadosProfesorComponent implements OnInit {
 
 
 
-  esProfesor():boolean{
+  esProfesor(): boolean {
 
-    if (this.authService.getUserFromLocalStorage()?.roles[0].rolNombre== 'ROLE_ADMIN') {
+    if (this.authService.getUserFromLocalStorage()?.roles[0].rolNombre == 'ROLE_ADMIN') {
       return true;
     } else {
 

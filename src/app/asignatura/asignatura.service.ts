@@ -264,7 +264,7 @@ export class AsignaturaService {
         'Authorization': `Bearer ${token}`
       })
     };
-    
+    console.log("URL CREAR TEMAS", `${this.urlApi}/${id}/temas`)
     return this.http.post<Tema>(`${this.urlApi}/${id}/temas`, tema, httpOptions);
   }
 
@@ -438,7 +438,9 @@ export class AsignaturaService {
     return this.http.delete(`${this.urlApi}/${idAsignatura}/artefactos/${idArtefacto}`, httpOptions);
   }
 
-  comprarArtefacto(idAsignatura: number, idArtefacto: number): Observable<any> {
+
+  
+  canjearArtefacto(idAsignatura: number, idCompra: number): Observable<any> {
 
     const token = sessionStorage.getItem('token'); // Recupera el token desde donde lo tengas almacenado
     
@@ -449,7 +451,55 @@ export class AsignaturaService {
       })
     };
 
-    return this.http.post(`${this.urlApi}/${idAsignatura}/compras/${idArtefacto}`, httpOptions);
+    return this.http.get(`${this.urlApi}/${idAsignatura}/compras/canjearCompra/${idCompra}`, httpOptions);
+  }
+
+  
+  aceptarCanjeo(idAsignatura: number, idCompra: number): Observable<any> {
+
+    const token = sessionStorage.getItem('token'); // Recupera el token desde donde lo tengas almacenado
+    
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type':  'application/json',
+        'Authorization': `Bearer ${token}`
+      })
+    };
+
+    return this.http.get(`${this.urlApi}/${idAsignatura}/compras/aceptarCanjeoCompra/${idCompra}`, httpOptions);
+  }
+
+    
+  denegarCanjeo(idAsignatura: number, idCompra: number): Observable<any> {
+
+    const token = sessionStorage.getItem('token'); // Recupera el token desde donde lo tengas almacenado
+    
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type':  'application/json',
+        'Authorization': `Bearer ${token}`
+      })
+    };
+
+    return this.http.get(`${this.urlApi}/${idAsignatura}/compras/rechazarCanjeoCompra/${idCompra}`, httpOptions);
+  }
+
+
+  comprarArtefacto(idAsignatura: number, idArtefacto: number): Observable<any> {
+
+    const token = sessionStorage.getItem('token'); // Recupera el token desde donde lo tengas almacenado
+    
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type':  'application/json',
+        'Authorization': `Bearer ${token}`
+      })
+    };
+    console.log("token",token )
+    console.log("httpOptions",httpOptions )
+    console.log(`${this.urlApi}/${idAsignatura}/compras/${idArtefacto}`, "compra")
+
+    return this.http.post(`${this.urlApi}/${idAsignatura}/compras/${idArtefacto}`, {}, httpOptions);
   }
 
   borrarReto(idAsignatura: number, idReto: number): Observable<any> {
@@ -466,6 +516,20 @@ export class AsignaturaService {
     return this.http.delete(`${this.urlApi}/${idAsignatura}/retos/${idReto}`, httpOptions);
   }
 
+  cambiarDecisionReto(idAsignatura: number, idAlumnoReto: number): Observable<any> {
+
+    const token = sessionStorage.getItem('token'); // Recupera el token desde donde lo tengas almacenado
+    
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type':  'application/json',
+        'Authorization': `Bearer ${token}`
+      })
+    };
+
+    return this.http.post(`${this.urlApi}/${idAsignatura}/retoCambiarDecision/${idAlumnoReto}`,{},  httpOptions);
+  }
+
   aceptarReto(idAsignatura: number, idAlumnoReto: number): Observable<any> {
 
     const token = sessionStorage.getItem('token'); // Recupera el token desde donde lo tengas almacenado
@@ -477,7 +541,7 @@ export class AsignaturaService {
       })
     };
 
-    return this.http.post(`${this.urlApi}/${idAsignatura}/retoAceptar/${idAlumnoReto}`, httpOptions);
+    return this.http.post(`${this.urlApi}/${idAsignatura}/retoAceptar/${idAlumnoReto}`,{},  httpOptions);
   }
 
   rechazarReto(idAsignatura: number, idAlumnoReto: number): Observable<any> {
@@ -491,7 +555,7 @@ export class AsignaturaService {
       })
     };
 
-    return this.http.post(`${this.urlApi}/${idAsignatura}/retoRechazar/${idAlumnoReto}`, httpOptions);
+    return this.http.post(`${this.urlApi}/${idAsignatura}/retoRechazar/${idAlumnoReto}`, {}, httpOptions);
   }
   
 
@@ -508,7 +572,7 @@ export class AsignaturaService {
       })
     };
     console.log(`${this.urlApi}/${idAsignatura}/asignarseReto/${idReto}`);
-    return this.http.post(`${this.urlApi}/${idAsignatura}/asignarseReto/${idReto}`, httpOptions);
+    return this.http.post(`${this.urlApi}/${idAsignatura}/asignarseReto/${idReto}`,{},  httpOptions);
   }
 
 
@@ -522,7 +586,8 @@ export class AsignaturaService {
         'Authorization': `Bearer ${token}`
       })
     };
-    return this.http.post(`${this.urlApi}/${idAsignatura}/finalizarReto/${idReto}`, httpOptions);
+    
+    return this.http.post(`${this.urlApi}/${idAsignatura}/finalizarReto/${idReto}`, {},  httpOptions);
   }
 
   borrarLogro(idAsignatura: number, idLogro: number): Observable<any> {

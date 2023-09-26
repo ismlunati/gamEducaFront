@@ -69,13 +69,14 @@ export class AsignaturaAnadirComponent implements OnInit {
       this.crearAsignatura()
       console.log("crearAsignatura")
     }
+
+    this.router.navigate(['/asignaturas']);
   }
 
 
   crearAsignatura(): void {
     this.asignaturaService.crearAsignatura(this.asignaturaForm.value)
       .subscribe((asignaturaCreada: Asignatura) => {
-        this.router.navigate(['/asignaturas']);
         console.log('Asignatura creada', asignaturaCreada);
         // Aquí podrías redirigir al usuario, actualizar la lista de asignaturas, etc.
       });

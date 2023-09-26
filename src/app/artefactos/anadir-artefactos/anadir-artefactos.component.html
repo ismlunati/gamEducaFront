@@ -41,16 +41,11 @@
           <label for="fechaFin" class="form-label">Fecha Fin</label>
           <input type="date" class="form-control" id="fechaFin" formControlName="fechaFin" placeholder="Introduce la fecha de fin">
         </div>
-        <div class="mb-3">
-          <label class="form-label">Logros Requeridos:</label>
-          <div *ngFor="let item of artefacto?.artefactoLogros">
-              <p>{{ item.logro.nombre }}</p>
-          </div>
-      </div>
+
 
         <button type="submit" class="btn btn-primary" *ngIf="esProfesor()">
-          <span *ngIf="idArtefacto!==0">Actualizar Asignatura</span>
-          <span *ngIf="idArtefacto==0">Crear Asignatura</span>
+          <span *ngIf="idArtefacto!==0">Actualizar Artefacto</span>
+          <span *ngIf="idArtefacto==0">Crear Artefacto</span>
         </button>
         <button type="button" style="margin-left: 20px;" class="btn btn-secondary ml-10" [routerLink]="['/asignaturas',idAsignatura,'artefactos','listado']">Volver</button>
       </form>

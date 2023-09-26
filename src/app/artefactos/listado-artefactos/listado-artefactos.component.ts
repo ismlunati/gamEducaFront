@@ -1,11 +1,13 @@
 import { DatePipe } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AsignaturaService } from 'src/app/asignatura/asignatura.service';
 import { Artefacto } from 'src/app/clasesGeneral/Artefacto';
 import { ArtefactoCompraDTO } from 'src/app/clasesGeneral/ArtefactoCompraDTO';
 import { EstadoCompra } from 'src/app/clasesGeneral/EstadoCompra';
 import { AuthService } from 'src/app/usuario/auth.service';
+import { ChangeDetectorRef } from '@angular/core';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-listado-artefactos',
@@ -18,65 +20,113 @@ export class ListadoArtefactosComponent implements OnInit {
   artefactos: Artefacto[] = [];
   artefactosFiltrados: Artefacto[] = [];
   artefactosAlumno: ArtefactoCompraDTO[] = [];
+  artefactosAlumnoFiltrado: ArtefactoCompraDTO[] = [];
 
-
-  estadoSeleccionado:EstadoCompra= EstadoCompra.COMPRADO;
+  estadoSeleccionado: EstadoCompra = EstadoCompra.COMPRADO;
 
 
   listas: string[] = ['Tienda', 'Mis artefactos'];  // Opciones para el select
   listaSeleccionada: string = 'Tienda';
 
 
-  public estados = Object.values(EstadoCompra);
+  public estados = Object.keys(EstadoCompra);
 
 
 
 
   constructor(private route: ActivatedRoute, private asignaturaService: AsignaturaService,
-    private authService:AuthService, private router:Router, private datePipe: DatePipe) { }
+    private authService: AuthService, private router: Router, private datePipe: DatePipe, private cdr: ChangeDetectorRef) { }
 
   ngOnInit(): void {
     console.log("prueba", this.route.snapshot.parent?.paramMap.get('id'))
-    
-    this.id= +this.route.snapshot.parent?.paramMap.get('id')!;
 
- 
+    this.id = +this.route.snapshot.parent?.paramMap.get('id')!;
 
-    this.asignaturaService.getArtefactosPorAsignatura(this.id).subscribe(artefactos => {
-      this.artefactos = artefactos;
-      this.artefactosFiltrados=artefactos;
-      console.log("procedo a imprimir las artefactos",this.artefactos);
-      //console.log("Estoy imprimiendo el valor de alumno", this.alumno);
-    });
+    this.getListaArtefactos();
+    this.getListaArtefactosAlumnos();
 
 
-    this.asignaturaService.getArtefactosPorAlumno(this.id).subscribe(artefactos => {
-      this.artefactosAlumno = artefactos;
-      console.log("procedo a imprimir las artefactos",this.artefactos);
-      //console.log("Estoy imprimiendo el valor de alumno", this.alumno);
-    });
-
-
-    if(this.esProfesor()){
-      this.listas= ['Tienda', 'Peticiones de uso'];
+    if (this.esProfesor()) {
+      this.listas = ['Tienda', 'Peticiones de uso'];
     }
 
   }
 
 
-  filtrarPorEstado():void{
+  recargarListaArtefactosAlumnos(mensaje: string) {
+    this.getListaArtefactosAlumnos();
 
-    this.artefactosAlumno= this.artefactosAlumno.filter(artefacto=> artefacto.estadoDeLaCompra===this.estadoSeleccionado);
+    alert(mensaje);
+  }
+
+
+
+  getEstadoValor(estadoKey: string): string | null {
+    if (estadoKey in EstadoCompra) {
+      return EstadoCompra[estadoKey as keyof typeof EstadoCompra];
+    }
+    return null;
+  }
+
+
+
+  filtrarPorEstado(): void {
+
+    if (this.listaSeleccionada !== 'Tienda') {
+
+      this.artefactosAlumnoFiltrado = this.artefactosAlumno.filter(artefacto => artefacto.estadoDeLaCompra === this.estadoSeleccionado);
+      console.log("estado seleccionado", this.estadoSeleccionado);
+
+      console.log("arteactos sin filtrar", this.artefactosAlumno);
+      console.log("arteactos filtrados", this.artefactosAlumnoFiltrado);
+
+    }
+  }
+
+
+
+
+
+  getListaArtefactos(): void {
+    this.asignaturaService.getArtefactosPorAsignatura(this.id).subscribe(artefactos => {
+      this.artefactos = artefactos;
+      this.artefactosFiltrados = artefactos;
+      console.log("procedo a imprimir las artefactos ASIGNATURAq", artefactos);
+      //console.log("Estoy imprimiendo el valor de alumno", this.alumno);
+    });
+  }
+
+
+  getListaArtefactosAlumnos(): void {
+
+    this.asignaturaService.getArtefactosPorAlumno(this.id).subscribe(artefactos => {
+      this.artefactosAlumno = artefactos;
+
+
+      this.filtrarPorEstado();
+      console.log("lista filtrada ", this.artefactosAlumnoFiltrado)
+
+      console.log("procedo a imprimir las artefactos ALUMNOS", artefactos);
+      //console.log("Estoy imprimiendo el valor de alumno", this.alumno);
+    });
+
 
   }
 
 
+
+
+
   borrarArtefacto(idArtefacto: number): void {
-    this.asignaturaService.borrarArtefacto( this.id,idArtefacto).subscribe(
+    this.asignaturaService.borrarArtefacto(this.id, idArtefacto).subscribe(
       res => {
+        Swal.fire('Borrado',`Se ha borrado el artefacto ${this.artefactos.filter(x=> x.id=== idArtefacto)[0].nombre} con exito`,'success');
+
         console.log('Asignatura borrada exitosamente');
         this.artefactos = this.artefactos.filter(tema => tema.id !== idArtefacto);
         // Actualiza tu vista o haz algo tras la eliminación de la asignatura
+        this.getListaArtefactos();
+        this.getListaArtefactosAlumnos();
       },
       err => {
         console.error('Error borrando la asignatura', err);
@@ -86,26 +136,27 @@ export class ListadoArtefactosComponent implements OnInit {
 
 
   comprarArtefacto(idArtefacto: number): void {
-    this.asignaturaService.borrarArtefacto( this.id,idArtefacto).subscribe(
+    this.asignaturaService.comprarArtefacto(this.id, idArtefacto).subscribe(
       res => {
-        console.log('Asignatura borrada exitosamente');
-        this.artefactos = this.artefactos.filter(tema => tema.id !== idArtefacto);
+        console.log('Artefacto comprado exitosamente');
         // Actualiza tu vista o haz algo tras la eliminación de la asignatura
+        Swal.fire('Compra',`Se ha realizado la compra del artefacto ${this.artefactos.filter(x=> x.id=== idArtefacto)[0].nombre} con exito`,'success');
+        this.getListaArtefactosAlumnos();
       },
       err => {
-        console.error('Error borrando la asignatura', err);
+        console.error('Error comprando la asignatura', err);
       }
     );
   }
 
 
   navegar(id: number) {
-    this.router.navigate(['/asignaturas', this.id,'artefactos',id,'editar']);
+    this.router.navigate(['/asignaturas', this.id, 'artefactos', id, 'editar']);
   }
 
-  esProfesor():boolean{
+  esProfesor(): boolean {
 
-    if (this.authService.getUserFromLocalStorage()?.roles[0].rolNombre== 'ROLE_ADMIN') {
+    if (this.authService.getUserFromLocalStorage()?.roles[0].rolNombre == 'ROLE_ADMIN') {
 
       return true;
     } else {

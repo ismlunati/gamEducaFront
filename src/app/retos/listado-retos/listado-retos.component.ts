@@ -18,38 +18,30 @@ export class ListadoRetosComponent implements OnInit {
   retosUsuario: AlumnoRetoDTO[] = [];
 
   retosFiltrados: Reto[] = [];
-  estadoSeleccionado: EstadoReto= EstadoReto.COMPLETADO;
+  retosUsuarioFiltrados: AlumnoRetoDTO[] = [];
+  estadoSeleccionado: EstadoReto = EstadoReto.COMPLETADO;
 
   listas: string[] = ['Lista retos', 'Retos inscritos'];  // Opciones para el select
   listaSeleccionada: string = 'Lista retos';
 
-  public estados = Object.values(EstadoReto);
+  public estados = Object.keys(EstadoReto);
 
 
   constructor(private route: ActivatedRoute, private asignaturaService: AsignaturaService,
-    private authService:AuthService, private router:Router) { }
+    private authService: AuthService, private router: Router) { }
 
   ngOnInit(): void {
     console.log("prueba", this.route.snapshot.parent?.paramMap.get('id'))
-    
-    this.id= +this.route.snapshot.parent?.paramMap.get('id')!;
 
- 
-
-    this.asignaturaService.getRetosPorAsignatura(this.id).subscribe(retos => {
-      this.retos = retos;
-      this.retosFiltrados= retos;
-      console.log("Retos",this.retos);
-      //console.log("Estoy imprimiendo el valor de alumno", this.alumno);
-    });
+    this.id = +this.route.snapshot.parent?.paramMap.get('id')!;
 
 
-    this.asignaturaService.getRetosPorAsignaturaUsuario(this.id).subscribe(retos => {
-      this.retosUsuario = retos;
-      console.log("Retos",this.retosUsuario);
-      //console.log("Estoy imprimiendo el valor de alumno", this.alumno);
-    });
-    console.log("Estoy probando si imprime retos despeus de SUBSCRIBE",this.retosUsuario )
+    this.getRetosPorAsignatura();
+
+    this.getRetosPorAlumnoAsignatura();
+
+
+
 
   }
 
@@ -61,20 +53,84 @@ export class ListadoRetosComponent implements OnInit {
   //   }
   // }
 
-
-
-  filtrarPorEstado(): void {
+  recargarListaRetos(): void {
+    // Tu código para recargar la lista de retos.
+    console.log('Recargando lista de retos...');
+    this.getRetosPorAlumnoAsignatura();
     
-    this.retosUsuario = this.retosUsuario.filter(retoConEstado => 
-      retoConEstado.retoConEstado.filter(reto => reto.estado === this.estadoSeleccionado));
-  
+  }
 
 
-}
+  getEstadoValor(estadoKey: string): string | null {
+    if (estadoKey in EstadoReto) {
+      return EstadoReto[estadoKey as keyof typeof EstadoReto];
+    }
+    return null;
+  }
 
+
+  getRetosPorAsignatura() {
+
+    this.asignaturaService.getRetosPorAsignatura(this.id).subscribe(retos => {
+      this.retos = retos;
+      this.retosFiltrados = retos;
+      console.log("Retos", this.retos);
+
+      
+      //console.log("Estoy imprimiendo el valor de alumno", this.alumno);
+    });
+  }
+
+
+  getRetosPorAlumnoAsignatura() {
+
+    this.asignaturaService.getRetosPorAsignaturaUsuario(this.id).subscribe(retos => {
+      this.retosUsuario = retos;
+      console.log("Retos Usuario", this.retosUsuario);
+
+      this.onSelectChange();//Filtra por el estado actual seleccionado 
+
+
+      //console.log("Estoy imprimiendo el valor de alumno", this.alumno);
+    });
+  }
+
+
+  onSelectChange() {
+
+
+    this.retosUsuarioFiltrados = this.retosUsuario
+      .map(alumnoReto => {
+        const retoConEstadoFiltrados = alumnoReto.retoConEstado.filter(re => re.estado === this.estadoSeleccionado);
+
+        // Si hay retoConEstado que coinciden, construir el objeto AlumnoRetoDTO explícitamente
+        if (retoConEstadoFiltrados.length > 0) {
+          return {
+            alumno: alumnoReto.alumno,
+            retoConEstado: retoConEstadoFiltrados
+          };
+        } else {
+          return null;
+        }
+      })
+      .filter(alumnoReto => alumnoReto !== null) as AlumnoRetoDTO[];
+
+    console.log("retos filtrados1", this.retosUsuarioFiltrados);
+    console.log("retos sinn filtrados1", this.retosUsuario);
+
+
+  }
+
+
+  onSelectListChange(){
+    if(this.listaSeleccionada!=='Tienda'){
+      this.onSelectChange();
+    }
+
+  }
 
   navegar(id: number) {
-    this.router.navigate(['/asignaturas', this.id,'retos',id,'editar']);
+    this.router.navigate(['/asignaturas', this.id, 'retos', id, 'editar']);
   }
 
 
@@ -93,24 +149,24 @@ export class ListadoRetosComponent implements OnInit {
   }
 
 
-  unirseReto(idReto: number, nombreReto:String): void {
-    this.asignaturaService.unirseReto( this.id, idReto).subscribe(
+  unirseReto(idReto: number, nombreReto: String): void {
+    this.asignaturaService.unirseReto(this.id, idReto).subscribe(
       res => {
         console.log('Unido a reto exitosamente');
-        Swal.fire('Inscripcion',`Se ha realizado la inscripción al reto ${nombreReto} con exito`,'success');
+        Swal.fire('Inscripcion', `Se ha realizado la inscripción al reto ${nombreReto} con exito`, 'success');
         // Actualiza tu vista o haz algo tras la eliminación de la asignatura
       },
       err => {
-        Swal.fire('Inscripcion',`No se ha podido realizar la inscripción al reto "${nombreReto}" con exito`,'error');
+        Swal.fire('Inscripcion', `No se ha podido realizar la inscripción al reto "${nombreReto}" con exito`, 'error');
         console.error('Error uniendose a reto', err);
       }
     );
   }
 
 
-  esProfesor():boolean{
+  esProfesor(): boolean {
 
-    if (this.authService.getUserFromLocalStorage()?.roles[0].rolNombre== 'ROLE_ADMIN') {
+    if (this.authService.getUserFromLocalStorage()?.roles[0].rolNombre == 'ROLE_ADMIN') {
       return true;
     } else {
 

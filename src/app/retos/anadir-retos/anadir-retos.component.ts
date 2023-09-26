@@ -2,7 +2,7 @@ import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 import { AsignaturaService } from 'src/app/asignatura/asignatura.service';
 import { AuthService } from 'src/app/usuario/auth.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Reto } from 'src/app/clasesGeneral/Reto';
 import { Asignatura } from 'src/app/asignatura/asignatura';
 import { Logro } from 'src/app/clasesGeneral/Logro';
@@ -26,7 +26,7 @@ export class AnadirRetosComponent implements OnInit {
   asignatura!: Asignatura;
 
   constructor(private fb: FormBuilder, private asignaturaService: AsignaturaService,
-    private route: ActivatedRoute, private authService: AuthService) {
+    private route: ActivatedRoute, private authService: AuthService, private router: Router) {
 
     // this.retoForm = this.fb.group({
     //   nombre: [''],
@@ -61,12 +61,12 @@ export class AnadirRetosComponent implements OnInit {
 
     console.log("Este es el id del reto", this.idReto);
 
-    // this.asignaturaService.getLogrosPorAsignatura(this.idAsignatura).subscribe(logros => {
-    //   this.logrosAsignatura = logros;
-    //   console.log("Estos son los logros disponibles", logros);
-    //   console.log("logro de prueba:", logros[0]);
+    this.asignaturaService.getLogrosPorAsignatura(this.idAsignatura).subscribe(logros => {
+      this.logrosAsignatura = logros;
+      console.log("Estos son los logros disponibles", logros);
+      console.log("logro de prueba:", logros[0]);
 
-    // });
+    });
 
     if (this.idReto !== 0) {
       // Aquí va la lógica si existe id
@@ -164,6 +164,8 @@ export class AnadirRetosComponent implements OnInit {
       this.crearReto()
       console.log("crearReto")
     }
+
+    this.router.navigate(['/asignaturas',this.idAsignatura,'retos','listado']);
   }
 
 

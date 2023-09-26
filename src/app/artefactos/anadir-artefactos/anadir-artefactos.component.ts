@@ -111,6 +111,9 @@ export class AnadirArtefactosComponent implements OnInit {
 
   }
 
+
+
+
   metodoActualizarCrear():void{
     if(this.idArtefacto!==0){
       console.log("actualizar")

@@ -30,10 +30,12 @@ export class ListaEstadosComponent implements OnInit {
 
     this.id = +this.route.snapshot.parent?.paramMap.get('id')!;
 
+    console.log("Retos asignador", this.retosAsignados);
 
     if (this.retosAsignados && this.retosAsignados[0] && this.retosAsignados[0].retoConEstado) {
       this.retosResultado = this.retosAsignados[0].retoConEstado.filter
-      (reto => reto.estado === this.estadoSeleccionado).map(reto => reto.reto);
+        (reto => reto.estado === this.estadoSeleccionado).map(reto => reto.reto);
+      console.log("retos resultado= ", this.retosResultado)
     }
 
 
@@ -41,13 +43,16 @@ export class ListaEstadosComponent implements OnInit {
 
   ngOnChanges(changes: SimpleChanges): void {
 
-      this.retosResultado = this.retosAsignados![0].retoConEstado.filter
+    console.log("Estado", this.estadoSeleccionado)
+    console.log("RETOS RESULTADO", this.retosAsignados)
+    this.retosResultado = this.retosAsignados![0].retoConEstado.filter
       (reto => reto.estado === this.estadoSeleccionado).map(reto => reto.reto);
-    
-      console.log(this.estadoSeleccionado?.toString())
-      if(this.estadoSeleccionado?.toString() === 'EN CURSO'){
-        console.log("SI")
-      }
+
+      console.log("Reto resultado", this.retosResultado)
+    console.log(this.estadoSeleccionado?.toString())
+    if (this.estadoSeleccionado?.toString() === 'EN CURSO') {
+      console.log("SI")
+    }
   }
 
 
@@ -68,7 +73,7 @@ export class ListaEstadosComponent implements OnInit {
   }
 
 
-  finalizarReto(reto:Reto): void {
+  finalizarReto(reto: Reto): void {
     this.asignaturaService.finalizarReto(this.id, reto.id).subscribe(
       res => {
         console.log('Unido a reto exitosamente');

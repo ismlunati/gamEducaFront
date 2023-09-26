@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Asignatura } from 'src/app/asignatura/asignatura';
 import { AsignaturaService } from 'src/app/asignatura/asignatura.service';
 import { Tema } from 'src/app/clasesGeneral/Tema';
@@ -22,7 +22,7 @@ export class AnadirTemaComponent implements OnInit {
   asignatura!: Asignatura;
 
   constructor(private fb: FormBuilder,private asignaturaService: AsignaturaService,
-     private route: ActivatedRoute, private authService:AuthService) {
+     private route: ActivatedRoute, private authService:AuthService, private router: Router) {
 
     this.temaForm = this.fb.group({
       nombre: '',
@@ -70,7 +70,7 @@ export class AnadirTemaComponent implements OnInit {
   }
 
   metodoActualizarCrear():void{
-    if(this.idAsignatura!==0){
+    if(this.idTema!==0){
       console.log("actualizar")
       this.actualizarTema();
 
@@ -79,6 +79,8 @@ export class AnadirTemaComponent implements OnInit {
       this.crearTema()
       console.log("crearAsignatura")
     }
+
+    this.router.navigate(['/asignaturas', this.idAsignatura,'temas','listado']);
   }
 
 

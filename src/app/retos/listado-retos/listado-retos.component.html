@@ -1,13 +1,11 @@
 <p>listado-retos works!</p>
 <div class="container mt-4">
 
-  <select [(ngModel)]="estadoSeleccionado" *ngIf="listaSeleccionada ==='Retos inscritos'">
-    <option *ngFor="let estado of estados" [value]="estado">{{estado}}</option>
+  <select [(ngModel)]="estadoSeleccionado" *ngIf="listaSeleccionada ==='Retos inscritos'"  (change)="onSelectChange()">
+    <option *ngFor="let estado of estados" [value]="estado">{{getEstadoValor(estado)}}</option>
   </select>
   
-  <button (click)="filtrarPorEstado()"  *ngIf="listaSeleccionada ==='Retos inscritos'">Filtrar</button>
-
-  <select [(ngModel)]="listaSeleccionada">
+  <select [(ngModel)]="listaSeleccionada" (change)="onSelectListChange()">
     <option *ngFor="let lista of listas" [value]="lista">{{lista}}</option>
   </select>
   
@@ -54,8 +52,8 @@
       ></app-lista-estados>
 
       <app-lista-estados-profesor *ngIf="listaSeleccionada ==='Retos inscritos' && esProfesor()"
-
-      [retosAsignados]="retosUsuario"
+      (recargarRetos)="recargarListaRetos()"
+      [retosAsignados]="retosUsuarioFiltrados"
       [estadoSeleccionado]="estadoSeleccionado"
       
       ></app-lista-estados-profesor>
