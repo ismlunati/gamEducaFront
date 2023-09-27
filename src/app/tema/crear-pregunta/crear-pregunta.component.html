@@ -1,0 +1,21 @@
+<form [formGroup]="preguntaForm" (ngSubmit)="onSubmit()">
+    <div formGroupName="pregunta">
+        <label>Texto Pregunta:</label>
+        <input formControlName="enunciado" type="text" />
+      </div>
+    <div>
+      <label>Número de Respuestas:</label>
+      <input formControlName="numRespuestas" type="number" (change)="crearRespuestas()" />
+    </div>
+    <div formArrayName="respuestas">
+      <div *ngFor="let respuesta of respuestas.controls; let i = index">
+        <input [formControl]="toFormControl(respuesta)" placeholder="Respuesta {{i + 1}}" />
+      </div>
+    </div>
+    <div>
+      <label>Respuesta Correcta:</label>
+      <input formControlName="respuestaCorrecta" type="text" />
+    </div>
+    <button type="submit">Submit</button>
+  </form>
+  

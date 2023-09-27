@@ -26,6 +26,7 @@ import { AnadirLogrosComponent } from './logros/anadir-logros/anadir-logros.comp
 import { ListadoRetosComponent } from './retos/listado-retos/listado-retos.component';
 import { AnadirRetosComponent } from './retos/anadir-retos/anadir-retos.component';
 import { TestViewComponent } from './preguntas/test-view.component';
+import { CrearPreguntaComponent } from './tema/crear-pregunta/crear-pregunta.component';
 
 
 const routes: Routes = [
@@ -73,6 +74,10 @@ const routes: Routes = [
           {
             path: 'listado',
             component: ListadoTemasComponent
+          }, 
+          {
+            path: ':id/crearPregunta',
+            component: CrearPreguntaComponent
           },
           {
             path: 'añadir',

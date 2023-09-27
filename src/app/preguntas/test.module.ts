@@ -17,8 +17,8 @@ import { TestViewComponent } from './test-view.component';
     TestPreguntaComponent,
     TestResultadosComponent,
     TestListComponent,
-    TestViewComponent // Declara tu componente de pregunta de test
-  ],
+    TestViewComponent
+    ],
   imports: [
     CommonModule,
     ReactiveFormsModule,
@@ -28,7 +28,9 @@ import { TestViewComponent } from './test-view.component';
   exports: [
     CreateTestComponent,
     TestPreguntaComponent,
-    TestResultadosComponent  // Exporta tu componente de pregunta de test si es necesario
+    TestResultadosComponent,
+    TestListComponent,
+    TestViewComponent  // Exporta tu componente de pregunta de test si es necesario
   ]
 })
 export class TestModule { }

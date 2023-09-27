@@ -9,6 +9,7 @@
             <th>Nombre</th>
             <th>Descripcion</th>
             <th *ngIf="esProfesor()">Eliminar</th>
+            <th *ngIf="!esProfesor()">Crear pregunta</th>
 
           </tr>
         </thead>
@@ -20,6 +21,17 @@
             <td *ngIf="esProfesor()">
               <button class="btn btn-primary" (click)="borrarTema(tema.id); $event.stopPropagation()">Eliminar</button>
             </td>
+            <td *ngIf="!esProfesor()">
+              <button 
+              class="btn btn-primary" 
+              [routerLink]="['/asignaturas', id, 'temas', tema.id ,'crearPregunta']"
+              (click)="$event.stopPropagation()">
+              Crear pregunta
+            </button>
+            
+            </td>
+    
+
             <!-- etc., agrega más celdas si necesitas -->
           </tr>
         </tbody>

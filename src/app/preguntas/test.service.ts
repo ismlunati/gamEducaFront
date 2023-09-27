@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
+import { Pregunta } from './preguntas.model/Pregunta';
 
 
 
@@ -13,6 +14,38 @@ export class TestService {
   private baseUrl = 'http://localhost:8081/asignaturas';
 
   constructor(private http: HttpClient) { }
+
+
+
+
+
+
+  crearPregunta(idAsignatura: number, idTema: number, formValue: any): Observable<Pregunta> {
+    
+    const token = sessionStorage.getItem('token'); // Recupera el token desde donde lo tengas almacenado
+    const headers = new HttpHeaders({
+      'Content-Type':  'application/json',
+      'Authorization': `Bearer ${token}`
+    });
+    
+    const url = `${this.baseUrl}/${idAsignatura}/temas/${idTema}/crearPregunta`;
+
+    const { pregunta, respuestas, respuestaCorrecta } = formValue;
+
+    const respuestasString = respuestas.join(',');
+
+
+    const body = pregunta;
+    const params = {
+      respuestas: respuestasString,
+      respuestaCorrecta: respuestaCorrecta
+    };
+
+
+    return this.http.post<Pregunta>(url, body, {headers, params });
+  }
+
+  
 
   createTest(testData: any, selectedPreguntaIds: string): Observable<any> {
     const token = sessionStorage.getItem('token'); // Recupera el token desde donde lo tengas almacenado

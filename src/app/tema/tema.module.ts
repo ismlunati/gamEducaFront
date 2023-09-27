@@ -5,6 +5,7 @@ import { RouterModule } from '@angular/router';
 import { TemasComponent } from './temas.component';
 import { ListadoTemasComponent } from './listado-temas/listado-temas.component';
 import { AnadirTemaComponent } from './anadir-tema/anadir-tema.component';
+import { CrearPreguntaComponent } from './crear-pregunta/crear-pregunta.component';
 
 
 
@@ -14,7 +15,8 @@ import { AnadirTemaComponent } from './anadir-tema/anadir-tema.component';
   declarations: [
     TemasComponent,
     ListadoTemasComponent,
-    AnadirTemaComponent
+    AnadirTemaComponent,
+    CrearPreguntaComponent
 
 
   ],
