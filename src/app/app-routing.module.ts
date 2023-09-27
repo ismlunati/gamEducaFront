@@ -1,10 +1,13 @@
+import { CreateTestComponent } from './preguntas/testCreate.component/createTest.component';
+import { TestResultadosComponent } from './preguntas/testResultado.component/test-resultados.component';
+import { TestPreguntaComponent } from './preguntas/testPregunta.component/test-pregunta.component';
+import { TestListComponent } from './preguntas/testList.component/test-list.component';
 import { AnadirArtefactosComponent } from './artefactos/anadir-artefactos/anadir-artefactos.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { LoginComponent } from './usuario/login/login.component';
 import { RegisterComponent } from './usuario/register/register.component';
 import { FooterComponent } from './web-main/footer/footer.component';
-import { ListadoComponent } from './asignatura/asignatura-main/listado/listado.component';
 import { InscripcionComponent } from './asignatura/asignatura-main/inscripcion/inscripcion.component';
 import { SolicitudesPendientesComponent } from './asignatura/solicitudes-pendientes/solicitudes-pendientes.component';
 import { AsignaturaComponent } from './asignatura/asignatura.component';
@@ -22,10 +25,8 @@ import { ListadoLogrosComponent } from './logros/listado-logros/listado-logros.c
 import { AnadirLogrosComponent } from './logros/anadir-logros/anadir-logros.component';
 import { ListadoRetosComponent } from './retos/listado-retos/listado-retos.component';
 import { AnadirRetosComponent } from './retos/anadir-retos/anadir-retos.component';
-import { TestComponent } from './preguntas/test.component';
-import { TestListComponent } from './preguntas/test-list.component';
-import { TestPreguntaComponent } from './preguntas/test-pregunta.component';
-import { TestResultadosComponent } from './preguntas/test-resultados.component';
+import { TestViewComponent } from './preguntas/test-view.component';
+
 
 const routes: Routes = [
 
@@ -149,27 +150,43 @@ const routes: Routes = [
 
         ]
       },
+      {
+        path: ':id/test',
+        component: TestViewComponent,
+        children: [
+
+
+          {
+            path: 'listado',
+            component: TestListComponent
+          },
+
+          {
+            path: 'añadir',
+            component: CreateTestComponent
+          },
+          {
+            path: ':id/editar',
+            component: AnadirLogrosComponent
+          }
+          ,
+          {
+            path: 'test-pregunta/:idTest',
+            component: TestPreguntaComponent
+          }
+
+
+        ]
+      },
+
 
     ]
   },
+
+
   {
     path: 'inscripcion',
     component: InscripcionComponent
-  },
-
-  {
-    path: 'test',
-    component: TestComponent
-  }, // Añadir esta línea para la ruta de Test
-
-  {
-    path: 'verTest',
-    component: TestListComponent
-  }, // Añadir esta línea para la ruta de Test
-
-  {
-    path: 'test-pregunta/:idAsignatura/:idTest',
-    component: TestPreguntaComponent
   },
 
   {

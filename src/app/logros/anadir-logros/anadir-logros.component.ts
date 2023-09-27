@@ -178,44 +178,44 @@ export class AnadirLogrosComponent implements OnInit {
   }
 
 
-  crearLogro1(): void {
+  // crearLogro1(): void {
 
-    const formValues = this.logroForm.value;
-    console.log("artefactoIDBD", this.artefactosAsignatura[0].id);
-    const selectedArtefacto = this.artefactosAsignatura.find(artefacto => artefacto.id === formValues.artefactoLogros.artefacto);
+  //   const formValues = this.logroForm.value;
+  //   console.log("artefactoIDBD", this.artefactosAsignatura[0].id);
+  //   const selectedArtefacto = this.artefactosAsignatura.find(artefacto => artefacto.id === formValues.artefactoLogros.artefacto);
   
-    console.log("Artefacts", this.artefactosAsignatura);
-    console.log("Form Values", formValues.artefactoLogros.artefacto);
-    console.log("Selected artefacto", selectedArtefacto);
+  //   console.log("Artefacts", this.artefactosAsignatura);
+  //   console.log("Form Values", formValues.artefactoLogros.artefacto);
+  //   console.log("Selected artefacto", selectedArtefacto);
 
-    let artefactoLogros: ArtefactoLogro | null = null; // asigna null como valor por defecto
+  //   let artefactoLogros: ArtefactoLogro | null = null; // asigna null como valor por defecto
   
-    if (selectedArtefacto !== undefined) {
-      artefactoLogros = {
-        ...formValues.artefactoLogro // Esto copia los valores de desbloquear y obtener del formulario
-      }
-      artefactoLogros!.artefacto = selectedArtefacto;
+  //   if (selectedArtefacto !== undefined) {
+  //     artefactoLogros = {
+  //       ...formValues.artefactoLogro // Esto copia los valores de desbloquear y obtener del formulario
+  //     }
+  //     artefactoLogros!.artefacto = selectedArtefacto;
 
 
-      console.log("artefacto logros", artefactoLogros);
-    }
+  //     console.log("artefacto logros", artefactoLogros);
+  //   }
   
-    console.log("selectedArtefacto", selectedArtefacto);
+  //   console.log("selectedArtefacto", selectedArtefacto);
     
   
-    const logroPost: Logro = {
-      ...formValues, // Esto copia los valores de nombre, descripcion, etc. del formulario
-      artefactoLogros: artefactoLogros // este será null si selectedArtefacto es undefined
-    };
+  //   const logroPost: Logro = {
+  //     ...formValues, // Esto copia los valores de nombre, descripcion, etc. del formulario
+  //     artefactoLogros: artefactoLogros // este será null si selectedArtefacto es undefined
+  //   };
   
-    console.log("Logro posteado", logroPost);
+  //   console.log("Logro posteado", logroPost);
   
-    this.asignaturaService.crearLogro(logroPost, this.idAsignatura!)
-      .subscribe((logro: Logro) => {
-        console.log('logro creada', logro);
-        // Aquí podrías redirigir al usuario, actualizar la lista de asignaturas, etc.
-      });
-  }
+  //   this.asignaturaService.crearLogro(logroPost, this.idAsignatura!)
+  //     .subscribe((logro: Logro) => {
+  //       console.log('logro creada', logro);
+  //       // Aquí podrías redirigir al usuario, actualizar la lista de asignaturas, etc.
+  //     });
+  // }
   
 
   actualizarLogro(): void {

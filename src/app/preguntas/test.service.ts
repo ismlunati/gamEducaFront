@@ -1,8 +1,6 @@
-// test.service.ts
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Test } from './test.model';
 import { tap } from 'rxjs/operators';
 
 
@@ -44,7 +42,7 @@ export class TestService {
   }
 
 
-  getTests(): Observable<any> {
+  getTests(idAsignatura:number): Observable<any> {
     console.log("Test.Service: getTests");
     const token = sessionStorage.getItem('token');
     const httpOptions = {
@@ -53,7 +51,7 @@ export class TestService {
         'Authorization': `Bearer ${token}`
       })
     };
-    return this.http.get<any>(`${this.baseUrl}/1/test`, httpOptions);
+    return this.http.get<any>(`${this.baseUrl}/${idAsignatura}/test`, httpOptions);
   }
 
 
@@ -74,6 +72,7 @@ export class TestService {
       tap(data => {
         // Guardamos la pregunta obtenida en el servicio
         this.preguntaActual = data;
+        console.log("pregunta actual",data)
       })
     );
   }

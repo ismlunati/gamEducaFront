@@ -1,3 +1,5 @@
+import { Respuesta } from "./Respuesta";
+
 export interface Pregunta {
   id: number;
   enunciado: string;
@@ -5,10 +7,3 @@ export interface Pregunta {
   // otros campos si es necesario
 }
 
-export interface Respuesta {
-  id: number;
-  texto: string;
-  esCorrecta: boolean;
-  // otros campos si es necesario
-}
-  
