@@ -15,5 +15,12 @@
       </ul>
       <p><strong>Respuesta Seleccionada:</strong> {{item.respuestas[0].texto}}</p> 
       <p><strong>Respuesta Correcta:</strong> {{item.respuestas[1].texto}}</p> 
+
+      <button 
+              class="btn btn-primary" 
+              [routerLink]="['/asignaturas',idAsignatura , 'test',   idTest,'reportarPregunta', item.pregunta.id]"
+              >
+              Crear Reporte
+            </button>
     </div>
 </div>

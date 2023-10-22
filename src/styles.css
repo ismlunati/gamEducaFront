@@ -1,1 +1,18 @@
-/* You can add global styles to this file, and also import other style files */
+/* Para toda la página */
+body {
+  margin: 0;
+  padding: 0;
+  background-image: url('/assets/images/fondo_lapices.jpg');
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-attachment: fixed; /* Esto hará que la imagen de fondo permanezca fija al hacer scroll */
+  height: 100vh; /* Esto asegura que el cuerpo ocupe toda la altura de la vista */
+}
+
+/* O solo para un contenedor específico
+.main-container {
+  background-image: url('/assets/images/fondo_lapices.jpg');
+  background-size: cover;
+  background-position: center center;
+} */

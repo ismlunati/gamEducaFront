@@ -1,21 +1,29 @@
-<form [formGroup]="preguntaForm" (ngSubmit)="onSubmit()">
-    <div formGroupName="pregunta">
-        <label>Texto Pregunta:</label>
-        <input formControlName="enunciado" type="text" />
+<form [formGroup]="preguntaForm" (ngSubmit)="onSubmit()" class="container mt-4">
+  <div class="mb-3 row" formGroupName="pregunta">
+    <label for="textoPregunta" class="col-sm-2 col-form-label">Texto Pregunta:</label>
+    <div class="col-sm-10">
+      <input formControlName="enunciado" type="text" class="form-control" id="textoPregunta" />
+    </div>
+  </div>
+  <div class="mb-3 row">
+    <label for="numRespuestas" class="col-sm-2 col-form-label">Número de Respuestas:</label>
+    <div class="col-sm-10">
+      <input formControlName="numRespuestas" type="number" class="form-control" id="numRespuestas" (change)="crearRespuestas()" />
+    </div>
+  </div>
+  <div formArrayName="respuestas">
+    <div *ngFor="let respuesta of respuestas.controls; let i = index" class="mb-3 row">
+      <label class="col-sm-2 col-form-label">Respuesta {{i + 1}}:</label>
+      <div class="col-sm-10">
+        <input [formControl]="toFormControl(respuesta)" class="form-control" placeholder="Respuesta {{i + 1}}" />
       </div>
-    <div>
-      <label>Número de Respuestas:</label>
-      <input formControlName="numRespuestas" type="number" (change)="crearRespuestas()" />
     </div>
-    <div formArrayName="respuestas">
-      <div *ngFor="let respuesta of respuestas.controls; let i = index">
-        <input [formControl]="toFormControl(respuesta)" placeholder="Respuesta {{i + 1}}" />
-      </div>
+  </div>
+  <div class="mb-3 row">
+    <label for="respuestaCorrecta" class="col-sm-2 col-form-label">Respuesta Correcta:</label>
+    <div class="col-sm-10">
+      <input formControlName="respuestaCorrecta" type="text" class="form-control" id="respuestaCorrecta" />
     </div>
-    <div>
-      <label>Respuesta Correcta:</label>
-      <input formControlName="respuestaCorrecta" type="text" />
-    </div>
-    <button type="submit">Submit</button>
-  </form>
-  
+  </div>
+  <button type="submit" class="btn btn-primary">Submit</button>
+</form>

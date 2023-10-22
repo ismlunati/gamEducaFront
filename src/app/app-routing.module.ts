@@ -27,6 +27,8 @@ import { ListadoRetosComponent } from './retos/listado-retos/listado-retos.compo
 import { AnadirRetosComponent } from './retos/anadir-retos/anadir-retos.component';
 import { TestViewComponent } from './preguntas/test-view.component';
 import { CrearPreguntaComponent } from './tema/crear-pregunta/crear-pregunta.component';
+import { CrearReporteComponent } from './preguntas/crear-reporte/crear-reporte.component';
+import { ReportePreguntasComponent } from './preguntas/reporte-preguntas/reporte-preguntas.component';
 
 
 const routes: Routes = [
@@ -179,8 +181,16 @@ const routes: Routes = [
             path: 'test-pregunta/:idTest',
             component: TestPreguntaComponent
           }
-
-
+          ,
+          {
+            path: ':idTest/reportarPregunta/:idPregunta',
+            component: CrearReporteComponent
+          }
+          ,
+          {
+            path: 'reportePregunta',
+            component: ReportePreguntasComponent
+          }
         ]
       },
 

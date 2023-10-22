@@ -22,7 +22,7 @@ export class CrearPreguntaComponent implements OnInit {
       pregunta: this.fb.group({
         enunciado: ['']
       }),
-      numRespuestas: [0],
+      numRespuestas: [1],
       respuestas: this.fb.array([]),
       respuestaCorrecta: [''],
     });
@@ -36,7 +36,7 @@ export class CrearPreguntaComponent implements OnInit {
   crearRespuestas() {
     const numRespuestas = this.preguntaForm.get('numRespuestas')?.value;
     this.respuestas.clear(); // Llamada correcta a clear
-    for (let i = 0; i < numRespuestas; i++) {
+    for (let i = 0; i < numRespuestas-1; i++) {
       this.respuestas.push(this.fb.control('')); // Llamada correcta a push
     }
   }

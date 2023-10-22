@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { Pregunta } from './preguntas.model/Pregunta';
+import { ReportePregunta } from './preguntas.model/ReportePregunta';
 
 
 
@@ -17,17 +18,49 @@ export class TestService {
 
 
 
+  getReportesPorAsignatura(idAsignatura: number): Observable<ReportePregunta[]> {
+
+    const token = sessionStorage.getItem('token'); // Recupera el token desde donde lo tengas almacenado
+    
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type':  'application/json',
+        'Authorization': `Bearer ${token}`
+      })
+    };
+    
+    return this.http.get<ReportePregunta[]>(`${this.baseUrl}/${idAsignatura}/reportePreguntas`, httpOptions); // Asegúrate de usar tu URL correcta
+  }
+    
+    
+    crearReportarPregunta(reportePregunta: ReportePregunta, idAsignatura: number, idTest: number, idPregunta: number): Observable<any> {
+      
+      const token = sessionStorage.getItem('token'); // Recupera el token desde donde lo tengas almacenado
+      const httpOptions = {
+        headers: new HttpHeaders({
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        }),
+        //params: new HttpParams().set('selectedPreguntaIds', selectedPreguntaIds)
+      };
+
+      console.log("reportarPregunta", reportePregunta);
+      const url = `${this.baseUrl}/${idAsignatura}/test/${idTest}/reportarPregunta/${idPregunta}`;
+      return this.http.post(url, reportePregunta, httpOptions);
+    }
+
+
 
 
 
   crearPregunta(idAsignatura: number, idTema: number, formValue: any): Observable<Pregunta> {
-    
+
     const token = sessionStorage.getItem('token'); // Recupera el token desde donde lo tengas almacenado
     const headers = new HttpHeaders({
-      'Content-Type':  'application/json',
+      'Content-Type': 'application/json',
       'Authorization': `Bearer ${token}`
     });
-    
+
     const url = `${this.baseUrl}/${idAsignatura}/temas/${idTema}/crearPregunta`;
 
     const { pregunta, respuestas, respuestaCorrecta } = formValue;
@@ -42,16 +75,16 @@ export class TestService {
     };
 
 
-    return this.http.post<Pregunta>(url, body, {headers, params });
+    return this.http.post<Pregunta>(url, body, { headers, params });
   }
 
-  
+
 
   createTest(testData: any, selectedPreguntaIds: string): Observable<any> {
     const token = sessionStorage.getItem('token'); // Recupera el token desde donde lo tengas almacenado
     const httpOptions = {
       headers: new HttpHeaders({
-        'Content-Type':  'application/json',
+        'Content-Type': 'application/json',
         'Authorization': `Bearer ${token}`
       }),
       //params: new HttpParams().set('selectedPreguntaIds', selectedPreguntaIds)
@@ -66,7 +99,7 @@ export class TestService {
     const token = sessionStorage.getItem('token');
     const httpOptions = {
       headers: new HttpHeaders({
-        'Content-Type':  'application/json',
+        'Content-Type': 'application/json',
         'Authorization': `Bearer ${token}`
       })
     };
@@ -75,12 +108,12 @@ export class TestService {
   }
 
 
-  getTests(idAsignatura:number): Observable<any> {
+  getTests(idAsignatura: number): Observable<any> {
     console.log("Test.Service: getTests");
     const token = sessionStorage.getItem('token');
     const httpOptions = {
       headers: new HttpHeaders({
-        'Content-Type':  'application/json',
+        'Content-Type': 'application/json',
         'Authorization': `Bearer ${token}`
       })
     };
@@ -93,7 +126,7 @@ export class TestService {
     const token = sessionStorage.getItem('token');
     const httpOptions = {
       headers: new HttpHeaders({
-        'Content-Type':  'application/json',
+        'Content-Type': 'application/json',
         'Authorization': `Bearer ${token}`
       }),
       params: new HttpParams().set('inicio', inicio).set('idRespuesta', idRespuesta)
@@ -101,20 +134,20 @@ export class TestService {
     console.log('${this.baseUrl}/${idAsignatura}/test/${idTest}/realizarTest')
     console.log(inicio, idRespuesta);
     return this.http.get<any>(`${this.baseUrl}/${idAsignatura}/test/${idTest}/realizarTest`, httpOptions)
-    .pipe(
-      tap(data => {
-        // Guardamos la pregunta obtenida en el servicio
-        this.preguntaActual = data;
-        console.log("pregunta actual",data)
-      })
-    );
+      .pipe(
+        tap(data => {
+          // Guardamos la pregunta obtenida en el servicio
+          this.preguntaActual = data;
+          console.log("pregunta actual", data)
+        })
+      );
   }
 
   getTestResultados(idAsignatura: number, idTest: number): Observable<any> {
     const token = sessionStorage.getItem('token');
     const httpOptions = {
       headers: new HttpHeaders({
-        'Content-Type':  'application/json',
+        'Content-Type': 'application/json',
         'Authorization': `Bearer ${token}`
       })
     };
@@ -127,15 +160,15 @@ export class TestService {
   }
 
   // Variable para almacenar la pregunta
-private _preguntaActual: any;
+  private _preguntaActual: any;
 
-// Método setter para guardar la pregunta actual
-set preguntaActual(pregunta: any) {
-  this._preguntaActual = pregunta;
-}
+  // Método setter para guardar la pregunta actual
+  set preguntaActual(pregunta: any) {
+    this._preguntaActual = pregunta;
+  }
 
-// Método getter para recuperar la pregunta actual
-get preguntaActual(): any {
-  return this._preguntaActual;
-}
+  // Método getter para recuperar la pregunta actual
+  get preguntaActual(): any {
+    return this._preguntaActual;
+  }
 }

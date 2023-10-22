@@ -22,15 +22,12 @@ export class TestListComponent implements OnInit {
 
     this.idAsignatura= +this.route.snapshot.parent?.paramMap.get('id')!;
 
-
     console.log("Test-List.Component: ngOnInit");
     this.testService.getTests( this.idAsignatura).subscribe(data => {
       this.tests = data;
       console.log("Test", this.tests)
     });
   }
-
-
 
   realizarTest(testId: number) {
     console.log("Test-List.Component: realizarTest");
@@ -51,10 +48,6 @@ export class TestListComponent implements OnInit {
       }
     );
   }
-
-
-
-
 
 
   esProfesor():boolean{

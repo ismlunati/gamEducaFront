@@ -1,11 +1,57 @@
-<p>asignatura-navigate works!</p>
-<h1>ID de la asignatura: {{id}}</h1>
-
-<div class="d-flex justify-content-around">
-    <button class="btn btn-primary"   [routerLink]="['/asignaturas', id, 'temas','listado']">      Temas      </button>
-    <button class="btn btn-success"   [routerLink]="['/asignaturas', id, 'logros','listado']">     Logros     </button>
-    <button class="btn btn-warning"   [routerLink]="['/asignaturas', id, 'artefactos','listado']"> Artefactos</button>
-    <button class="btn btn-danger"    [routerLink]="['/asignaturas', id, 'test','listado']"> Test      </button>
-    <button class="btn btn-info"      [routerLink]="['/asignaturas', id, 'retos','listado']">      Retos      </button>
+<div class="row">
+  <div class="col-md-4">
+    <div class="card mb-4"
+      style="height: 20rem; background-image: url('/assets/images/temas.jpg'); background-size: cover;">
+      <div class="card-body text-center" >
+        <a [routerLink]="['/asignaturas', id, 'temas','listado']" class="btn btn-primary">Ir a Temas</a>
+      </div>
+    </div>
   </div>
 
+  <div class="col-md-4">
+    <div class="card mb-4"
+      style="height: 20rem; background-image: url('/assets/images/escalador.jpg'); background-size: cover;">
+      <div class="card-body text-center" >
+        <a [routerLink]="['/asignaturas', id, 'logros','listado']" class="btn btn-success">Ir a Logros</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-4">
+    <div class="card mb-4"
+      style="height: 20rem; background-image: url('/assets/images/artefactos.jpg'); background-size: cover;">
+      <div class="card-body text-center" >
+        <a [routerLink]="['/asignaturas', id, 'artefactos','listado']" class="btn btn-warning">Ir a Artefactos</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-4">
+    <div class="card mb-4"
+      style="height: 20rem; background-image: url('/assets/images/cuestionario.jpg'); background-size: cover;">
+      <div class="card-body text-center" >
+        <a [routerLink]="['/asignaturas', id, 'test','listado']" class="btn btn-danger">Ir a Test</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-4">
+    <div class="card mb-4"
+      style="height: 20rem; background-image: url('/assets/images/retos.jpg'); background-size: cover;">
+      <div class="card-body text-center" >
+        <a [routerLink]="['/asignaturas', id, 'retos','listado']" class="btn btn-info">Ir a Retos</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-4">
+    <div class="card mb-4"
+      style="height: 20rem; background-image: url('/assets/images/volver.jpg'); background-size: cover;">
+      <div class="card-body text-center" >
+        <a [routerLink]="['/asignaturas']" class="btn btn-secondary">Volver</a>
+      </div>
+    </div>
+  </div>
+</div>

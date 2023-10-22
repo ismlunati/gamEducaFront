@@ -8,6 +8,8 @@ import { TestPreguntaComponent } from './testPregunta.component/test-pregunta.co
 import { TestResultadosComponent } from './testResultado.component/test-resultados.component';
 import { CreateTestComponent } from './testCreate.component/createTest.component';
 import { TestViewComponent } from './test-view.component';
+import { CrearReporteComponent } from './crear-reporte/crear-reporte.component';
+import { ReportePreguntasComponent } from './reporte-preguntas/reporte-preguntas.component';
 
 
 
@@ -17,7 +19,9 @@ import { TestViewComponent } from './test-view.component';
     TestPreguntaComponent,
     TestResultadosComponent,
     TestListComponent,
-    TestViewComponent
+    TestViewComponent,
+    CrearReporteComponent,
+    ReportePreguntasComponent
     ],
   imports: [
     CommonModule,

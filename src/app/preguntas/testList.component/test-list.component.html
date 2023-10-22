@@ -29,6 +29,10 @@
 <div class="mt-3">
   <button class="btn btn-primary" [routerLink]="['/asignaturas', idAsignatura]">Volver</button>
 </div>
+
+<div class="mt-3">
+  <button class="btn btn-primary" [routerLink]="['/asignaturas', idAsignatura, 'test', 'reportePregunta']">Ver reportes de la asignatura</button>
+</div>
 <div class="mt-3" *ngIf="esProfesor()">
   <button class="btn btn-primary" [routerLink]="['/asignaturas', idAsignatura,'test','añadir']">Añadir</button>
 </div>

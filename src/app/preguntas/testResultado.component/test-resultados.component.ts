@@ -1,3 +1,4 @@
+import { ActivatedRoute } from '@angular/router';
 import { TestService } from './../test.service';
 import { Component, OnInit } from '@angular/core';
 
@@ -8,17 +9,26 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TestResultadosComponent implements OnInit {
 
+  idAsignatura!:number;
+  idTest!:number;
+
+
   resultados: any;  // Declaras la propiedad 'resultados' aquí
 
-  constructor(private testService: TestService) {}
+  constructor(private testService: TestService, private route:ActivatedRoute) {}
 
   ngOnInit(): void {
-    const idAsignatura = 1; // Obtén esto de alguna manera, quizás de la URL
-    const idTest = 2; // Igual que idAsignatura
+
+    this.idAsignatura = +this.route.snapshot?.paramMap.get('idAsignatura')!;
+
+    this.idTest= +this.route.snapshot?.paramMap.get('idTest')!;
   
-    this.testService.getTestResultados(idAsignatura, idTest).subscribe(
+
+    console.log("asignatura y test", this.idAsignatura, this.idTest)
+    this.testService.getTestResultados(this.idAsignatura, this.idTest).subscribe(
       data => {
-        this.resultados = data; // 'resultados' es una variable de la clase donde almacenas el objeto PreguntaElegibleDTO
+        this.resultados = data;
+        console.log("resultados", data) // 'resultados' es una variable de la clase donde almacenas el objeto PreguntaElegibleDTO
       },
       error => {
         console.error('Ha ocurrido un error al obtener los resultados: ', error);
