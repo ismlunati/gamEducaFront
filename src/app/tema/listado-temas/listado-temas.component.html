@@ -14,7 +14,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let tema of temas " (click)="navegar(tema.id)">
+          <tr *ngFor="let tema of temas"  class="tabla-fila" (click)="navegar(tema.id)">
 
             <td>{{tema.nombre}}</td>
             <td>{{tema.descripcion}}</td>

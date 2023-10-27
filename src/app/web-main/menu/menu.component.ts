@@ -9,7 +9,8 @@ import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-menu',
-  templateUrl: './menu.component.html'
+  templateUrl: './menu.component.html',
+  styleUrls: ['../web-main.component.css']
 })
 export class MenuComponent implements OnInit {
 

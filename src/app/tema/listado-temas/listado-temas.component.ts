@@ -6,7 +6,8 @@ import { AuthService } from 'src/app/usuario/auth.service';
 
 @Component({
   selector: 'app-listado-temas',
-  templateUrl: './listado-temas.component.html'
+  templateUrl: './listado-temas.component.html',
+  styleUrls: ['../tema.component.css']
 })
 export class ListadoTemasComponent implements OnInit {
 

@@ -16,8 +16,7 @@ import { TestModule } from './preguntas/test.module';
 
 @NgModule({
   declarations: [
-    AppComponent,
-    
+    AppComponent    
 
   ],
   imports: [
