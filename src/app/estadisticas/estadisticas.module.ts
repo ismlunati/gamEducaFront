@@ -1,10 +1,10 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
+import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { PreguntasPorTemaComponent } from './preguntas-por-tema/preguntas-por-tema.component';
+import { RouterModule } from '@angular/router';
+import { estadisticasRoutes } from './estadisticas-routing.module';
 import { EstadisticasComponent } from './estadisticas.component';
-import { EstadisticasRoutingModule, estadisticasRoutes } from './estadisticas-routing.module';
+import { PreguntasPorTemaComponent } from './preguntas-por-tema/preguntas-por-tema.component';
 
 
 
@@ -18,12 +18,12 @@ import { EstadisticasRoutingModule, estadisticasRoutes } from './estadisticas-ro
     RouterModule,
     FormsModule,
     ReactiveFormsModule,
-    RouterModule.forChild(estadisticasRoutes)
+    RouterModule.forChild(estadisticasRoutes),
+    
     
   ],
   exports:[
     PreguntasPorTemaComponent,
-    EstadisticasComponent
-  ]
+    EstadisticasComponent  ]
 })
 export class EstadisticasModule { }
