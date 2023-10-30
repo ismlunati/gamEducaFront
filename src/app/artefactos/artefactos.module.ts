@@ -6,6 +6,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { AnadirArtefactosComponent } from './anadir-artefactos/anadir-artefactos.component';
 import { ListadoArtefactosAlumnosComponent } from './listado-artefactos-alumnos/listado-artefactos-alumnos.component';
+import { artefactoRoutes } from './artefactos-routing.module';
 
 
 
@@ -20,7 +21,7 @@ import { ListadoArtefactosAlumnosComponent } from './listado-artefactos-alumnos/
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    RouterModule
+    RouterModule.forChild(artefactoRoutes)
   ], 
   exports:[
     ArtefactosComponent,

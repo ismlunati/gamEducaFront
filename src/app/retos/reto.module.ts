@@ -7,6 +7,7 @@ import { ListadoRetosComponent } from './listado-retos/listado-retos.component';
 import { AnadirRetosComponent } from './anadir-retos/anadir-retos.component';
 import { ListaEstadosComponent } from './lista-estados-alumnos/lista-estados.component';
 import { ListaEstadosProfesorComponent } from './lista-estados-profesor/lista-estados-profesor.component';
+import { retosRoutes } from './retos-routing.module';
 
 
 
@@ -32,7 +33,7 @@ import { ListaEstadosProfesorComponent } from './lista-estados-profesor/lista-es
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    RouterModule
+    RouterModule.forChild(retosRoutes)
   ]
 })
 export class RetoModule { }

@@ -1,34 +1,21 @@
-import { CreateTestComponent } from './preguntas/testCreate.component/createTest.component';
-import { TestResultadosComponent } from './preguntas/testResultado.component/test-resultados.component';
-import { TestPreguntaComponent } from './preguntas/testPregunta.component/test-pregunta.component';
-import { TestListComponent } from './preguntas/testList.component/test-list.component';
-import { AnadirArtefactosComponent } from './artefactos/anadir-artefactos/anadir-artefactos.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { ArtefactosComponent } from './artefactos/artefactos.component';
+import { AsignaturaAnadirComponent } from './asignatura/asignatura-anadir/asignatura-anadir.component';
+import { AsignaturaMainComponent } from './asignatura/asignatura-main/asignatura-main.component';
+import { InscripcionComponent } from './asignatura/asignatura-main/inscripcion/inscripcion.component';
+import { AsignaturaNavigateComponent } from './asignatura/asignatura-navigate/asignatura-navigate.component';
+import { AsignaturaComponent } from './asignatura/asignatura.component';
+import { SolicitudesPendientesComponent } from './asignatura/solicitudes-pendientes/solicitudes-pendientes.component';
+import { LogrosComponent } from './logros/logros.component';
+import { TestViewComponent } from './preguntas/test-view.component';
+import { TestResultadosComponent } from './preguntas/testResultado.component/test-resultados.component';
+import { RetosComponent } from './retos/retos.component';
+import { TemasComponent } from './tema/temas.component';
 import { LoginComponent } from './usuario/login/login.component';
 import { RegisterComponent } from './usuario/register/register.component';
 import { FooterComponent } from './web-main/footer/footer.component';
-import { InscripcionComponent } from './asignatura/asignatura-main/inscripcion/inscripcion.component';
-import { SolicitudesPendientesComponent } from './asignatura/solicitudes-pendientes/solicitudes-pendientes.component';
-import { AsignaturaComponent } from './asignatura/asignatura.component';
-import { AsignaturaMainComponent } from './asignatura/asignatura-main/asignatura-main.component';
-import { AsignaturaAnadirComponent } from './asignatura/asignatura-anadir/asignatura-anadir.component';
-import { AsignaturaNavigateComponent } from './asignatura/asignatura-navigate/asignatura-navigate.component';
-import { RetosComponent } from './retos/retos.component';
-import { TemasComponent } from './tema/temas.component';
-import { ListadoTemasComponent } from './tema/listado-temas/listado-temas.component';
-import { AnadirTemaComponent } from './tema/anadir-tema/anadir-tema.component';
-import { ArtefactosComponent } from './artefactos/artefactos.component';
-import { ListadoArtefactosComponent } from './artefactos/listado-artefactos/listado-artefactos.component';
-import { LogrosComponent } from './logros/logros.component';
-import { ListadoLogrosComponent } from './logros/listado-logros/listado-logros.component';
-import { AnadirLogrosComponent } from './logros/anadir-logros/anadir-logros.component';
-import { ListadoRetosComponent } from './retos/listado-retos/listado-retos.component';
-import { AnadirRetosComponent } from './retos/anadir-retos/anadir-retos.component';
-import { TestViewComponent } from './preguntas/test-view.component';
-import { CrearPreguntaComponent } from './tema/crear-pregunta/crear-pregunta.component';
-import { CrearReporteComponent } from './preguntas/crear-reporte/crear-reporte.component';
-import { ReportePreguntasComponent } from './preguntas/reporte-preguntas/reporte-preguntas.component';
+import { EstadisticasComponent } from './estadisticas/estadisticas.component';
 
 
 const routes: Routes = [
@@ -72,126 +59,35 @@ const routes: Routes = [
       {
         path: ':id/temas',
         component: TemasComponent,
-        children: [
-          {
-            path: 'listado',
-            component: ListadoTemasComponent
-          }, 
-          {
-            path: ':id/crearPregunta',
-            component: CrearPreguntaComponent
-          },
-          {
-            path: 'añadir',
-            component: AnadirTemaComponent
-          },
-          {
-            path: ':id/editar',
-            component: AnadirTemaComponent
-          },
-        ]
+        loadChildren: () => import('./tema/tema.module').then(m => m.TemaModule)
       },
       {
         path: ':id/retos',
         component: RetosComponent,
-        children: [
-          {
-            path: 'listado',
-            component: ListadoRetosComponent
-          },
-          {
-            path: 'añadir',
-            component: AnadirRetosComponent
-          },
-          {
-            path: ':id/editar',
-            component: AnadirRetosComponent
-          },
-        ]
+        loadChildren: () => import('./retos/reto.module').then(m => m.RetoModule)
+
       },
       {
         path: ':id/artefactos',
         component: ArtefactosComponent,
-        children: [
+        loadChildren: () => import('./artefactos/artefactos.module').then(m => m.ArtefactosModule)
 
-
-          {
-            path: 'listado',
-            component: ListadoArtefactosComponent
-          },
-
-          {
-            path: 'añadir',
-            component: AnadirArtefactosComponent
-          },
-          {
-            path: ':id/editar',
-            component: AnadirArtefactosComponent
-          }
-
-
-
-        ]
       },
       {
         path: ':id/logros',
         component: LogrosComponent,
-        children: [
+        loadChildren: () => import('./logros/logros.module').then(m => m.LogrosModule)
 
-
-          {
-            path: 'listado',
-            component: ListadoLogrosComponent
-          },
-
-          {
-            path: 'añadir',
-            component: AnadirLogrosComponent
-          },
-          {
-            path: ':id/editar',
-            component: AnadirLogrosComponent
-          }
-
-
-
-        ]
       },
       {
         path: ':id/test',
         component: TestViewComponent,
-        children: [
+        loadChildren: () => import('./preguntas/test.module').then(m => m.TestModule)
 
-
-          {
-            path: 'listado',
-            component: TestListComponent
-          },
-
-          {
-            path: 'añadir',
-            component: CreateTestComponent
-          },
-          {
-            path: ':id/editar',
-            component: AnadirLogrosComponent
-          }
-          ,
-          {
-            path: 'test-pregunta/:idTest',
-            component: TestPreguntaComponent
-          }
-          ,
-          {
-            path: ':idTest/reportarPregunta/:idPregunta',
-            component: CrearReporteComponent
-          }
-          ,
-          {
-            path: 'reportePregunta',
-            component: ReportePreguntasComponent
-          }
-        ]
+      },      
+      {
+        path: 'estadisticas',
+        loadChildren: () => import('./estadisticas/estadisticas.module').then(m => m.EstadisticasModule)
       },
 
 

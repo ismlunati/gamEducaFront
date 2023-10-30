@@ -6,6 +6,7 @@ import { TemasComponent } from './temas.component';
 import { ListadoTemasComponent } from './listado-temas/listado-temas.component';
 import { AnadirTemaComponent } from './anadir-tema/anadir-tema.component';
 import { CrearPreguntaComponent } from './crear-pregunta/crear-pregunta.component';
+import { temasRoutes } from './temas-routing.module';
 
 
 
@@ -24,7 +25,7 @@ import { CrearPreguntaComponent } from './crear-pregunta/crear-pregunta.componen
   ListadoTemasComponent,
   AnadirTemaComponent,
   TemasComponent,
-
+  CrearPreguntaComponent
     
   ],
 
@@ -32,7 +33,7 @@ import { CrearPreguntaComponent } from './crear-pregunta/crear-pregunta.componen
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    RouterModule
+    RouterModule.forChild(temasRoutes)
   ]
 })
 export class TemaModule { }

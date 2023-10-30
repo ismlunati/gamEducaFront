@@ -5,6 +5,7 @@ import { AnadirLogrosComponent } from './anadir-logros/anadir-logros.component';
 import { RouterModule } from '@angular/router';
 import { LogrosComponent } from './logros.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { logrosRoutes } from './logros-routing.module';
 
 
 
@@ -18,7 +19,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     CommonModule,
     RouterModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    RouterModule.forChild(logrosRoutes)
   ],
   exports:[
     ListadoLogrosComponent,
