@@ -1,0 +1,44 @@
+.boton-estilo {
+    font-size: 18px;
+    padding: 10px 20px;
+    border-radius: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+  }
+  
+  .boton-estilo:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+  }
+  
+
+
+  .card {
+    margin-bottom: 20px;
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+  }
+  .card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+
+  /* .container {
+    width: 50%;
+    margin: 0 auto;
+  }
+  .list-group {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  .list-item {
+    border-bottom: 1px solid #ccc;
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+  }
+  .list-item:last-child {
+    border-bottom: none;
+  }
+   */

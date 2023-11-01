@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
+import { EstadisticasTestPorTestDTO } from 'src/app/clasesGeneral/EstadisticasTestPorTestDTO';
 import { EstadisticasService } from '../estadisticas.service';
 import { ActivatedRoute } from '@angular/router';
-import { EstadisticasPreguntasPorTemasDTO } from 'src/app/clasesGeneral/EstadisticasPreguntasPorTemasDTO';
 import { trigger, state, style, transition, animate, query, stagger } from '@angular/animations';
 
 
 @Component({
-  selector: 'app-preguntas-por-tema',
-  templateUrl: './preguntas-por-tema.component.html',
+  selector: 'app-test-por-test',
+  templateUrl: './test-por-test.component.html',
   styleUrls: ['../styles.css'],
   animations: [
     trigger('fadeInStagger', [
@@ -22,11 +22,13 @@ import { trigger, state, style, transition, animate, query, stagger } from '@ang
     ])
   ]
 })
-export class PreguntasPorTemaComponent implements OnInit {
+
+
+export class TestPorTestComponent implements OnInit {
 
   id!:number;
 
-  preguntasTemas!:EstadisticasPreguntasPorTemasDTO[];
+  testPorTest!:EstadisticasTestPorTestDTO[];
 
 
   constructor(private estadisticaService: EstadisticasService, private route: ActivatedRoute) { 
@@ -38,11 +40,11 @@ export class PreguntasPorTemaComponent implements OnInit {
     this.id= +this.route.snapshot.parent?.paramMap.get('id')!;
 
 
-    this.estadisticaService.getEstadisticasPreguntaPorTemas(this.id).subscribe(estadisticas=> {
+    this.estadisticaService.getEstadisticasTestPorTest(this.id).subscribe(estadisticas=> {
       
       console.log(estadisticas); 
        
-       this.preguntasTemas= estadisticas;
+       this.testPorTest= estadisticas;
        
      });
   }

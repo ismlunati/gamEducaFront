@@ -3,6 +3,11 @@ import { RouterModule, Routes } from "@angular/router";
 import { NgModule } from "@angular/core";
 import { EstadisticasComponent } from "./estadisticas.component";
 import { PreguntasPorTemaComponent } from "./preguntas-por-tema/preguntas-por-tema.component";
+import { PreguntasPorAlumnosComponent } from "./preguntas-por-alumnos/preguntas-por-alumnos.component";
+import { TestPorTestComponent } from "./test-por-test/test-por-test.component";
+import { TestPorAlumnosComponent } from "./test-por-alumnos/test-por-alumnos.component";
+import { ReportesAlumnosComponent } from "./reportes-alumnos/reportes-alumnos.component";
+import { PreguntasReportadasComponent } from "./preguntas-reportadas/preguntas-reportadas.component";
 
 
 export const estadisticasRoutes: Routes = [
@@ -12,7 +17,12 @@ export const estadisticasRoutes: Routes = [
         children: [
 
 
-            { path: 'listado', component: PreguntasPorTemaComponent },
+            { path: 'preguntasPorTemas',         component: PreguntasPorTemaComponent },
+            { path: 'preguntasPorAlumnos',       component: PreguntasPorAlumnosComponent },
+            { path: 'testPorTest',               component: TestPorTestComponent },
+            { path: 'testPorAlumnos',            component: TestPorAlumnosComponent },
+            { path: 'reportesRealizados',        component: ReportesAlumnosComponent },
+            { path: 'preguntasReportadas',       component: PreguntasReportadasComponent },
             // { path: 'añadir', component: AnadirLogrosComponent },
             // { path: ':id/editar', component: AnadirLogrosComponent }
 

@@ -13,7 +13,7 @@ import { TemaModule } from './tema/tema.module';
 import { JwtInterceptor } from './usuario/JwtInterceptor';
 import { UsuarioModule } from './usuario/usuario.module';
 import { WebMainModule } from './web-main/web-main.module';
-
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 
 @NgModule({
@@ -31,7 +31,8 @@ import { WebMainModule } from './web-main/web-main.module';
     ArtefactosModule,
     LogrosModule,
     TestModule,
-    EstadisticasModule
+    EstadisticasModule,
+    BrowserAnimationsModule
   ],
   providers: [{ provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true }],
   bootstrap: [AppComponent]
