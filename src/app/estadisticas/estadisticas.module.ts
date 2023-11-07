@@ -10,6 +10,8 @@ import { TestPorAlumnosComponent } from './test-por-alumnos/test-por-alumnos.com
 import { TestPorTestComponent } from './test-por-test/test-por-test.component';
 import { ReportesAlumnosComponent } from './reportes-alumnos/reportes-alumnos.component';
 import { PreguntasReportadasComponent } from './preguntas-reportadas/preguntas-reportadas.component';
+import { TierListComponent } from './tier-list/tier-list.component';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 
 
 
@@ -21,7 +23,8 @@ import { PreguntasReportadasComponent } from './preguntas-reportadas/preguntas-r
     TestPorAlumnosComponent,
     TestPorTestComponent,
     ReportesAlumnosComponent,
-    PreguntasReportadasComponent
+    PreguntasReportadasComponent,
+    TierListComponent
   ],
   imports: [
     CommonModule,
@@ -29,6 +32,7 @@ import { PreguntasReportadasComponent } from './preguntas-reportadas/preguntas-r
     FormsModule,
     ReactiveFormsModule,
     RouterModule.forChild(estadisticasRoutes),
+    DragDropModule
     
     
   ],

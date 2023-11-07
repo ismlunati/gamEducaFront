@@ -25,9 +25,8 @@ export class TestPreguntaComponent implements OnInit {
 
     this.idTest = +this.route.snapshot?.paramMap.get('idTest')!;
 
-
-
     console.log("estamos en el componente pregunta de nuevo")
+
   }
   
 

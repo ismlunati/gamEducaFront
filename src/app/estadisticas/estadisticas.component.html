@@ -4,10 +4,12 @@
     <div class="text-center mb-4">
         <button class="btn btn-lg btn-primary mx-2" (click)="mostrarBotones('primero')" @slideFromLeft>Estadisticas por
             preguntas</button>
-        <button class="btn btn-lg btn-secondary mx-2" (click)="mostrarBotones('segundo')" @slideFromRight>Estadisticas
+        <button class="btn btn-lg btn-secondary mx-2" (click)="mostrarBotones('segundo')" @slideFromLeft>Estadisticas
             por test</button>
         <button class="btn btn-lg btn-secondary mx-2" (click)="mostrarBotones('tercero')"
             @slideFromRight>Reportes</button>
+        <button class="btn btn-lg btn-secondary mx-2" (click)="mostrarBotones('cuarto')"
+            @slideFromRight>Tier List</button>
     </div>
 
     <div *ngIf="grupoBotones === 'primero'" class="text-center mt-3">
@@ -23,8 +25,17 @@
     </div>
 
     <div *ngIf="grupoBotones === 'tercero'" class="text-center mt-3">
-        <button class="btn btn-danger mx-2 boton-estilo" (click)="navegar('reportesRealizados')">Reportes realizados por alumnos</button>
-        <button class="btn btn-warning mx-2 boton-estilo" (click)="navegar('preguntasReportadas')">Nº preguntas reportadas</button>
+        <button class="btn btn-danger mx-2 boton-estilo" (click)="navegar('reportesRealizados')">Reportes realizados por
+            alumnos</button>
+        <button class="btn btn-warning mx-2 boton-estilo" (click)="navegar('preguntasReportadas')">Nº preguntas
+            reportadas</button>
+    </div>
+
+
+
+    <div *ngIf="grupoBotones === 'cuarto'" class="text-center mt-3">
+        <button class="btn btn-danger mx-2 boton-estilo" (click)="navegar('crearTierList')">Crear tierList</button>
+        <button class="btn btn-warning mx-2 boton-estilo" (click)="navegar('preguntasReportadas')">Añadir alumnos a tierList</button>
     </div>
 </div>
 

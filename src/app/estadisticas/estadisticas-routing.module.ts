@@ -8,6 +8,7 @@ import { TestPorTestComponent } from "./test-por-test/test-por-test.component";
 import { TestPorAlumnosComponent } from "./test-por-alumnos/test-por-alumnos.component";
 import { ReportesAlumnosComponent } from "./reportes-alumnos/reportes-alumnos.component";
 import { PreguntasReportadasComponent } from "./preguntas-reportadas/preguntas-reportadas.component";
+import { TierListComponent } from "./tier-list/tier-list.component";
 
 
 export const estadisticasRoutes: Routes = [
@@ -23,6 +24,7 @@ export const estadisticasRoutes: Routes = [
             { path: 'testPorAlumnos',            component: TestPorAlumnosComponent },
             { path: 'reportesRealizados',        component: ReportesAlumnosComponent },
             { path: 'preguntasReportadas',       component: PreguntasReportadasComponent },
+            { path: 'crearTierList',             component: TierListComponent },
             // { path: 'añadir', component: AnadirLogrosComponent },
             // { path: ':id/editar', component: AnadirLogrosComponent }
 

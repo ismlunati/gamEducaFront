@@ -14,6 +14,8 @@ import { JwtInterceptor } from './usuario/JwtInterceptor';
 import { UsuarioModule } from './usuario/usuario.module';
 import { WebMainModule } from './web-main/web-main.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { DragDropModule } from '@angular/cdk/drag-drop';
+
 
 
 @NgModule({
@@ -32,7 +34,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     LogrosModule,
     TestModule,
     EstadisticasModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    DragDropModule
   ],
   providers: [{ provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true }],
   bootstrap: [AppComponent]

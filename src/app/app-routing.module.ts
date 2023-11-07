@@ -81,7 +81,6 @@ const routes: Routes = [
       },
       {
         path: ':id/test',
-        component: TestViewComponent,
         loadChildren: () => import('./preguntas/test.module').then(m => m.TestModule)
 
       },      

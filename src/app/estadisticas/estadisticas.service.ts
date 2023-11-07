@@ -6,6 +6,7 @@ import { EstadisticasPreguntasPorAlumnosDTO } from '../clasesGeneral/Estadistica
 import { EstadisticasTestPorTestDTO } from '../clasesGeneral/EstadisticasTestPorTestDTO';
 import { EstadisticasTestPorAlumnosDTO } from '../clasesGeneral/EstadisticasTestPorAlumnosDTO';
 import { EstadisticasReportesAlumnosDTO } from '../clasesGeneral/EstadisticasReportesAlumnosDTO';
+import { TierList } from '../clasesGeneral/TierList';
 
 @Injectable({
   providedIn: 'root'
@@ -79,5 +80,20 @@ export class EstadisticasService {
       })
     };
     return this.http.get<EstadisticasReportesAlumnosDTO[]>(`${this.urlApi}/${idAsignatura}/estadisticas/${tipoReporte}`, httpOptions); // Asegúrate de usar tu URL correcta
+  }
+
+
+
+  
+  postTierList(idAsignatura:number, tierList:FormData): Observable<TierList> {
+
+    const token = sessionStorage.getItem('token'); // Recupera el token desde donde lo tengas almacenado
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type':  'application/json',
+        'Authorization': `Bearer ${token}`
+      })
+    };
+    return this.http.post<TierList>(`${this.urlApi}/${idAsignatura}/estadisticas/tierList`, tierList, httpOptions); // Asegúrate de usar tu URL correcta
   }
 }

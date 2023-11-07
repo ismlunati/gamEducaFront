@@ -10,6 +10,7 @@ import { CreateTestComponent } from './testCreate.component/createTest.component
 import { TestViewComponent } from './test-view.component';
 import { CrearReporteComponent } from './crear-reporte/crear-reporte.component';
 import { ReportePreguntasComponent } from './reporte-preguntas/reporte-preguntas.component';
+import { preguntasRoutes } from './preguntas-routing.module';
 
 
 
@@ -27,14 +28,17 @@ import { ReportePreguntasComponent } from './reporte-preguntas/reporte-preguntas
     CommonModule,
     ReactiveFormsModule,
     RouterModule,
-    FormsModule
+    FormsModule,
+    RouterModule.forChild(preguntasRoutes)
   ],
   exports: [
     CreateTestComponent,
     TestPreguntaComponent,
     TestResultadosComponent,
     TestListComponent,
-    TestViewComponent  // Exporta tu componente de pregunta de test si es necesario
+    TestViewComponent,
+    
+    // Exporta tu componente de pregunta de test si es necesario
   ]
 })
 export class TestModule { }
