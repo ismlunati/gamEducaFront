@@ -8,7 +8,7 @@ export interface TierList{
     nombre:string;
     descripcion:string;
     asignatura:Asignatura;
-    tier:Tier[];
+    tiers:Tier[];
 
 
 }

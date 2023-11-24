@@ -35,7 +35,6 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
     TestModule,
     EstadisticasModule,
     BrowserAnimationsModule,
-    DragDropModule
   ],
   providers: [{ provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true }],
   bootstrap: [AppComponent]

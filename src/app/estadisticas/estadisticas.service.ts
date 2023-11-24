@@ -7,6 +7,7 @@ import { EstadisticasTestPorTestDTO } from '../clasesGeneral/EstadisticasTestPor
 import { EstadisticasTestPorAlumnosDTO } from '../clasesGeneral/EstadisticasTestPorAlumnosDTO';
 import { EstadisticasReportesAlumnosDTO } from '../clasesGeneral/EstadisticasReportesAlumnosDTO';
 import { TierList } from '../clasesGeneral/TierList';
+import { ListaAlumnosAndTierListDTO } from '../clasesGeneral/ListaAlumnosAndTierListDTO';
 
 @Injectable({
   providedIn: 'root'
@@ -82,7 +83,17 @@ export class EstadisticasService {
     return this.http.get<EstadisticasReportesAlumnosDTO[]>(`${this.urlApi}/${idAsignatura}/estadisticas/${tipoReporte}`, httpOptions); // Asegúrate de usar tu URL correcta
   }
 
+  getTierList(idAsignatura:number): Observable<TierList[]> {
 
+    const token = sessionStorage.getItem('token'); // Recupera el token desde donde lo tengas almacenado
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type':  'application/json',
+        'Authorization': `Bearer ${token}`
+      })
+    };
+    return this.http.get<TierList[]>(`${this.urlApi}/${idAsignatura}/estadisticas/tierList`, httpOptions); // Asegúrate de usar tu URL correcta
+  }
 
   
   postTierList(idAsignatura:number, tierList:FormData): Observable<TierList> {
@@ -95,5 +106,17 @@ export class EstadisticasService {
       })
     };
     return this.http.post<TierList>(`${this.urlApi}/${idAsignatura}/estadisticas/tierList`, tierList, httpOptions); // Asegúrate de usar tu URL correcta
+  }
+
+  getTier(idAsignatura:number, idTier:number): Observable<ListaAlumnosAndTierListDTO> {
+
+    const token = sessionStorage.getItem('token'); // Recupera el token desde donde lo tengas almacenado
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type':  'application/json',
+        'Authorization': `Bearer ${token}`
+      })
+    };
+    return this.http.get<ListaAlumnosAndTierListDTO>(`${this.urlApi}/${idAsignatura}/estadisticas/tierList/${idTier}`, httpOptions); // Asegúrate de usar tu URL correcta
   }
 }

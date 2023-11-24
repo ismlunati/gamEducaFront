@@ -12,6 +12,7 @@ import { ReportesAlumnosComponent } from './reportes-alumnos/reportes-alumnos.co
 import { PreguntasReportadasComponent } from './preguntas-reportadas/preguntas-reportadas.component';
 import { TierListComponent } from './tier-list/tier-list.component';
 import { DragDropModule } from '@angular/cdk/drag-drop';
+import { TierListEditorComponent } from './tier-list-editor/tier-list-editor.component';
 
 
 
@@ -24,7 +25,8 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
     TestPorTestComponent,
     ReportesAlumnosComponent,
     PreguntasReportadasComponent,
-    TierListComponent
+    TierListComponent,
+    TierListEditorComponent
   ],
   imports: [
     CommonModule,

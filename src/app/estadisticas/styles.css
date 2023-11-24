@@ -23,6 +23,39 @@
   }
   
 
+
+
+
+/* editor de tier */
+
+
+
+/* Estilos para las tarjetas arrastrables */
+.card {
+  cursor: grab;
+}
+
+/* Estilo de la tarjeta mientras se arrastra */
+.cdk-drag-preview {
+  cursor: grabbing;
+  opacity: 0.75;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Estilo de la tarjeta en su posición original mientras se arrastra otra tarjeta */
+.cdk-drag-placeholder {
+  opacity: 0;
+}
+
+/* Estilo de la lista de tiers al arrastrar sobre ella */
+.cdk-drop-list-dragging .card:not(.cdk-drag-placeholder) {
+  transform: scale(1.02);
+}
+
+
+
+
+
   /* .container {
     width: 50%;
     margin: 0 auto;
